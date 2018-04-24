@@ -1,0 +1,31 @@
+Regeln
+
+Zwei Spieler
+Auslösung des Beginners zufällig.
+Es wird abwechselnd gespielt.
+Ein Schuss pro Runde.
+Ereignisse der Schüsse: 
+- Wasser
+- Treffer
+- Versenkt
+
+Gewinner ist der, der als erstes alle Schiffe versenkt.
+
+Schiffe Liegen auf einem 10x10 Spielfeld (A-J, 1-10)
+Die Schiffe dürfen nicht aneinander stoßen.
+Die Schiffe dürfen nicht über Eck gebaut sein oder Löcher besitzen.
+Die Schiffe dürfen nicht diagonal aufgestellt werden.
+
+Jeder verfügt über insgesamt zehn Schiffe (in Klammern die Größe):
+ein Schlachtschiff (5 Kästchen)
+zwei Kreuzer (je 4 Kästchen)
+drei Zerstörer (je 3 Kästchen)
+vier U-Boote (je 2 Kästchen)
+
+
+Schüsse: 
+- Treffer mit X markiert
+- Wasser mit O markiert
+
+
+Quellen: Wiki https://de.wikipedia.org/wiki/Schiffe_versenken
