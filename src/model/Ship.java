@@ -5,7 +5,7 @@ import java.util.Map;
 public class Ship {
 
     public Map<String, Integer> locations;
-    public Integer hits;
+    public Map<String, Integer> hits;
     public Integer length;
     public String name;
     public Boolean sunken;
@@ -35,11 +35,11 @@ public class Ship {
         this.sunken = sunken;
     }
 
-    public Integer getHits() {
+    public Map<String, Integer> getHits() {
         return hits;
     }
 
-    public void setHits(Integer hits) {
+    public void setHits(Map<String, Integer> hits) {
         this.hits = hits;
     }
 
