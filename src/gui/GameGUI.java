@@ -1,11 +1,10 @@
-package gui;
+package src.GUI;
 
 import javax.swing.*;
 
-public class GameGUI {
-    private JPanel panel1;
-    private JButton button1;
-    private JButton button2;
-    private JButton button3;
-    private JButton button4;
+public class gameGUI {
+    private JPanel topLevelPanel;
+    private JPanel cards;
+    private JPanel myTurn;
+    private JPanel enemyTurn;
 }
