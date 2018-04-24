@@ -1,8 +1,8 @@
 package ship;
 
 public class AircraftCarrier extends Ship {
-    public AircraftCarrier(String x, String y, Boolean directionX) {
-        super(x, y, directionX);
+    public AircraftCarrier(String[] location) {
+        super(location);
         length = 5;
     }
 

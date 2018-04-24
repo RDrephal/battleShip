@@ -2,8 +2,8 @@ package ship;
 
 public class Submarine extends Ship{
 
-    public Submarine(String x, String y, Boolean directionX) {
-        super(x, y, directionX);
+    public Submarine(String[] location) {
+        super(location);
         length = 2;
     }
 

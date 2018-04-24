@@ -2,8 +2,8 @@ package ship;
 
 public class Destroyer extends Ship {
 
-    public Destroyer(String x, String y, Boolean directionX) {
-        super(x, y, directionX);
+    public Destroyer(String[] location) {
+        super(location);
         length = 3;
     }
 

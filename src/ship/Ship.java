@@ -1,21 +1,18 @@
 package ship;
 
+
 abstract class Ship {
 
-    public String x;
-    public String y;
+    public String[] location;
     protected Integer hits;
     protected Integer length;
-    public boolean directionX;
 
     public Integer getLength() {
         return length;
     }
 
-    public Ship(String x, String y, Boolean directionX) {
-        this.x = x;
-        this.y = y;
-        this.directionX = directionX;
+    public Ship(String[] location) {
+        this.location = location;
     }
 
     abstract String getTypeName();

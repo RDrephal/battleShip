@@ -1,8 +1,8 @@
 package ship;
 
 public class Cruiser extends Ship {
-    public Cruiser(String x, String y, Boolean directionX) {
-        super(x, y, directionX);
+    public Cruiser(String[] location) {
+        super(location);
         length = 4;
     }
 
