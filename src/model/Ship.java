@@ -24,6 +24,7 @@ public class Ship {
     }
 
     public void setLocations(Map<String, Integer> locations) {
+        locations.putAll(locations);
         this.locations = locations;
     }
 
