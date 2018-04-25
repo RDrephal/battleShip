@@ -19,14 +19,14 @@ public class Playerboard {
 
     public void addShipToGrid(Ship ship){
         List<Coordinates> currentCoordinates = new ArrayList<>();
-
+        Random r = new Random();
+        Integer horizontal = r.nextInt(2);
         Integer shipSize = ship.getLength();
         boolean position = false;
         while (position == false) {
-            Random r = new Random();
-            Boolean horizontal = r.nextBoolean();
+
             currentCoordinates = new ArrayList<>();
-            if (horizontal == true) {
+            if (horizontal == 1) {
                 Integer x = r.nextInt(Helper.Alphabet.length - shipSize)+1;
                 Integer y = r.nextInt(Helper.CoordinateY.length)+1;
                 x = x - 1;
@@ -102,18 +102,19 @@ public class Playerboard {
 
     public static void main(String[] args){
         Playerboard s = new Playerboard();
+        
         Ship ship = new Ship("name",4);
         s.addShipToGrid(ship);
         List<Ship> playerboard = s.getPlayerboard();
         Ship a = new Ship("a",3);
         s.addShipToGrid(a);
-        Ship b = new Ship("b",2);
-        s.addShipToGrid(b);
-
         Ship c = new Ship("c",3);
         s.addShipToGrid(c);
+        Ship b = new Ship("b",2);
+        s.addShipToGrid(b);
         Ship d = new Ship("d",2);
         s.addShipToGrid(d);
+
         ship.setSunken(true);
     }
 }
