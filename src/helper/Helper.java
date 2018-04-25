@@ -1,5 +1,8 @@
 package helper;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public class Helper {
@@ -11,5 +14,10 @@ public class Helper {
     public static String toAlpha(int n)
     {
         return Alphabet[n];
+    }
+
+    public static Integer alphaToInt(String s){
+            Integer i = (Arrays.asList(Alphabet).indexOf(s))+1;
+        return i;
     }
 }

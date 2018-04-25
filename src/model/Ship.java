@@ -1,11 +1,12 @@
 package model;
 
+import java.util.List;
 import java.util.Map;
 
 public class Ship {
 
-    public Map<String, Integer> locations;
-    public Map<String, Integer> hits;
+    public List<Coordinate> locations;
+    public List<Coordinate> hits;
     public Integer length;
     public String name;
     public Boolean sunken;
@@ -19,12 +20,11 @@ public class Ship {
         return length;
     }
 
-    public Map<String, Integer> getLocations() {
+    public List<Coordinate> getLocations() {
         return locations;
     }
 
-    public void setLocations(Map<String, Integer> locations) {
-        locations.putAll(locations);
+    public void setLocations(List<Coordinate> locations) {
         this.locations = locations;
     }
 
@@ -36,11 +36,11 @@ public class Ship {
         this.sunken = sunken;
     }
 
-    public Map<String, Integer> getHits() {
+    public List<Coordinate> getHits() {
         return hits;
     }
 
-    public void setHits(Map<String, Integer> hits) {
+    public void setHits(List<Coordinate> hits) {
         this.hits = hits;
     }
 
