@@ -6,12 +6,12 @@ import helper.Helper;
 import java.util.*;
 
 
-public class Grid {
+public class Playerboard {
     private Player owner;
     private List<Ship> playerboard;
 
 
-    public Grid(/*Player owner*/) {
+    public Playerboard(/*Player owner*/) {
         //this.owner = owner;
         playerboard =  new ArrayList<>();
 
@@ -101,7 +101,7 @@ public class Grid {
     }
 
     public static void main(String[] args){
-        Grid s = new Grid();
+        Playerboard s = new Playerboard();
         Ship ship = new Ship("name",4);
         s.addShipToGrid(ship);
         List<Ship> playerboard = s.getPlayerboard();
