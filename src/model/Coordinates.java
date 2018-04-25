@@ -1,10 +1,10 @@
 package model;
 
-public class Coordinate {
+public class Coordinates {
     private String x;
     private Integer y;
 
-    public Coordinate(String x, Integer y) {
+    public Coordinates(String x, Integer y) {
         this.x = x;
         this.y = y;
     }

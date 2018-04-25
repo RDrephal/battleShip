@@ -18,14 +18,14 @@ public class Grid {
     }
 
     public void addShipToGrid(Ship ship){
-        List<Coordinate> currentCoordinate = new ArrayList<>();
+        List<Coordinates> currentCoordinates = new ArrayList<>();
 
         Integer shipSize = ship.getLength();
         boolean position = false;
         while (position == false) {
             Random r = new Random();
             Boolean horizontal = r.nextBoolean();
-            currentCoordinate = new ArrayList<>();
+            currentCoordinates = new ArrayList<>();
             if (horizontal == true) {
                 Integer x = r.nextInt(Helper.Alphabet.length - shipSize)+1;
                 Integer y = r.nextInt(Helper.CoordinateY.length)+1;
@@ -34,7 +34,7 @@ public class Grid {
                     x += 1;
                     if (checkCoordinates(x, y) == true) {
                         String alpha = Helper.toAlpha(x-1);
-                        currentCoordinate.add(new Coordinate(alpha,y));
+                        currentCoordinates.add(new Coordinates(alpha,y));
                     }else{
                         break;
                     }
@@ -47,26 +47,26 @@ public class Grid {
                     y += 1;
                     if (checkCoordinates(x, y) == true) {
                         String alpha = Helper.toAlpha(x-1);
-                        currentCoordinate.add(new Coordinate(alpha, y));
-                        currentCoordinate.size();
+                        currentCoordinates.add(new Coordinates(alpha, y));
+                        currentCoordinates.size();
                     }else{
                         break;
                     }
                 }
             }
-            if(currentCoordinate.size() == shipSize) {
+            if(currentCoordinates.size() == shipSize) {
                 position = true;
             }
         }
-        ship.setLocations(currentCoordinate);
+        ship.setLocations(currentCoordinates);
         addToPlayerboard(ship);
     }
 
     private Boolean checkCoordinates(Integer x, Integer y) {
         List<Ship> ships= getPlayerboard();
         for ( Ship s : ships) {
-            List<Coordinate> locations = s.getLocations();
-            for (Coordinate a: locations) {
+            List<Coordinates> locations = s.getLocations();
+            for (Coordinates a: locations) {
                 Integer hx =  Helper.alphaToInt((String) a.getX());
                 Integer hy =  a.getY();
                 int sum = Math.abs((x - hx) + (y - hy));
@@ -115,6 +115,5 @@ public class Grid {
         Ship d = new Ship("d",2);
         s.addShipToGrid(d);
         ship.setSunken(true);
-
     }
 }
