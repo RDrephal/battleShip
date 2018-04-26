@@ -35,6 +35,7 @@ public class Computer extends Player {
         Integer shotIndex = r.nextInt(listSize);
         Coordinates shot = listFire.get(shotIndex);
         listFire.remove(shotIndex);
+        setFiring(listFire);
         String fireX = shot.getX();
         Integer fireY = shot.getY();
         ShotEvents result = getShotEvent(enemy, shot, fireX, fireY);
