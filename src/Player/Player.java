@@ -1,13 +1,13 @@
 package Player;
 
-import helper.Helper;
 import model.Coordinates;
 import model.Playerboard;
 import model.Ship;
+import model.ShotEvents;
 
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.List;
+
+import static model.ShotEvents.*;
 
 public abstract class Player {
     protected Playerboard playerboard;
@@ -15,7 +15,7 @@ public abstract class Player {
     protected List<Ship> listShips;
     protected boolean alive;
 
-    public abstract void fire(Playerboard enemy, Coordinates coordinates);
+    public abstract ShotEvents fire(Playerboard enemy, Coordinates coordinates);
 
     public Playerboard getPlayerboard() {
         return playerboard;
@@ -35,6 +35,35 @@ public abstract class Player {
 
         for (int i = 0; i <= ships.length-1; i++)
             addNewShips(ships[i][0],ships[i][1]);
+    }
+
+    protected ShotEvents getShotEvent(Playerboard enemy, Coordinates shot, String fireX, Integer fireY) {
+        ShotEvents result = WATER;
+
+        for(Ship ship :enemy.getPlayerboard()){
+            for (Coordinates c : ship.getLocations()){
+                String shipX = c.getX();
+                Integer shipY = c.getY();
+
+                if (shipX ==fireX && shipY == fireY){
+
+                    List<Coordinates> ls = ship.getHits();
+                    ls.add(shot);
+                    ship.setHits(ls);
+                    result = HIT;
+
+                    //Prüfen ob versenkt
+                    if (ship.getSunken()){
+                        result = DESTROY;
+
+                        if(enemy.prefAllShipsSunken()){
+                            result = WINNER;
+                        }
+                    }
+                }
+            }
+        }
+        return result;
     }
 
     protected abstract void addNewShips(String s, String s1);

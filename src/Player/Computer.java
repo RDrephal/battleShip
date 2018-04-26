@@ -4,6 +4,7 @@ import helper.Helper;
 import model.Coordinates;
 import model.Playerboard;
 import model.Ship;
+import model.ShotEvents;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ public class Computer extends Player {
         setFiring(firing);
     }
     @Override
-    public void fire(Playerboard enemy, Coordinates coordinates) {
+    public ShotEvents fire(Playerboard enemy, Coordinates coordinates) {
         //Mögliche Schüsse in der Liste listFire. Vorerst  nur Random Coordinates
 
         List<Coordinates>listFire = getFiring();
@@ -36,24 +37,9 @@ public class Computer extends Player {
         listFire.remove(shotIndex);
         String fireX = shot.getX();
         Integer fireY = shot.getY();
+        ShotEvents result = getShotEvent(enemy, shot, fireX, fireY);
 
-        for(Ship ship :enemy.getPlayerboard()){
-            for (Coordinates c : ship.getLocations()){
-                String shipX = c.getX();
-                Integer shipY = c.getY();
-
-                if (shipX ==fireX && shipY == fireY){
-
-                    List<Coordinates> ls = ship.getHits();
-                    ls.add(shot);
-                    ship.setHits(ls);
-
-                    //Prüfen ob versenkt
-                }
-            }
-        }
-        //Rückgabe werd einfügen Eventuell Treffer, Wasser, Versenkt, Game Over;
-
+        return result;
     }
 
     @Override

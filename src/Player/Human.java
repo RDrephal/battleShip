@@ -3,6 +3,7 @@ package Player;
 import model.Coordinates;
 import model.Playerboard;
 import model.Ship;
+import model.ShotEvents;
 
 
 public class Human extends Player {
@@ -20,7 +21,9 @@ public class Human extends Player {
     }
 
     @Override
-    public void fire(Playerboard enemy, Coordinates coordinates) {
-
+    public ShotEvents fire(Playerboard enemy, Coordinates coordinates) {
+        String fireX = coordinates.getX();
+        Integer fireY = coordinates.getY();
+        return getShotEvent(enemy,coordinates, fireX, fireY);
     }
 }

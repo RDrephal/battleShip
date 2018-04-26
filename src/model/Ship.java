@@ -15,6 +15,13 @@ public class Ship {
         this.name = name;
     }
 
+    public Boolean prefSunkenStatus(){
+        if(getHits().size() == getLocations().size()){
+            return true;
+        }
+        return false;
+    }
+
     public Integer getLength() {
         return length;
     }
@@ -28,12 +35,10 @@ public class Ship {
     }
 
     public Boolean getSunken() {
+        sunken = prefSunkenStatus();
         return sunken;
     }
 
-    public void setSunken(Boolean sunken) {
-        this.sunken = sunken;
-    }
 
     public List<Coordinates> getHits() {
         return hits;

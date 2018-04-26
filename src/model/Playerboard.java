@@ -66,6 +66,16 @@ public class Playerboard {
         addToPlayerboard(ship);
     }
 
+    public Boolean prefAllShipsSunken(){
+        List<Ship> ships = getPlayerboard();
+        for ( Ship s : ships) {
+            if(s.getSunken() == false){
+                return true;
+            }
+        }
+        return false;
+    }
+
     private Boolean checkCoordinates(Integer x, Integer y) {
         List<Ship> ships= getPlayerboard();
         for ( Ship s : ships) {
