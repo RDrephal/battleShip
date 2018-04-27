@@ -10,6 +10,10 @@ public class JButtonWithCoordinates extends JButton {
         this.xValue = xValue;
         this.yValue = yValue;
 
-        this.setText("EigenerButton");
+        this.setText("");
+    }
+
+    public void resetButton(){
+        //Hier soll sich der Button auf den Spielstart-Zustand zurücksetzen
     }
 }
