@@ -1,12 +1,21 @@
 package src.GUI;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class JButtonWithCoordinates extends JButton {
-    int xValue;
-    int yValue;
+    private int xValue;
+    private int yValue;
+    private Font font;
+    private Color defaultColor;
+
 
     public JButtonWithCoordinates(int xValue, int yValue){
+        font = new Font("Arial", Font.BOLD, 20);
+        this.setFont(font);
+
+        this.defaultColor = new Color(0,102,153);
+
         this.xValue = xValue;
         this.yValue = yValue;
 
@@ -14,6 +23,27 @@ public class JButtonWithCoordinates extends JButton {
     }
 
     public void resetButton(){
-        //Hier soll sich der Button auf den Spielstart-Zustand zurücksetzen
+        this.setText("");
+        this.setBackground(defaultColor);
+    }
+
+    public void hit(){
+        this.setText("X");
+    }
+
+    public void noHit(){
+        this.setText("O");
+    }
+
+    public void changeColor(int x, int y){
+        //Um mehrere Felder farbig zu hinterlegen
+    }
+
+    public int getXValue(){
+        return xValue;
+    }
+
+    public int getYValue(){
+        return yValue;
     }
 }

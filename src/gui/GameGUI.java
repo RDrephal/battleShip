@@ -55,7 +55,17 @@ public class GameGUI {
                         //Do the stuff
                         System.out.println("Klick!");
                         JButtonWithCoordinates jb = (JButtonWithCoordinates) e.getSource();
-                        System.out.println(jb.xValue + " " + jb.yValue);
+                        System.out.println(jb.getXValue() + " " + jb.getYValue());
+
+                        //wenn getroffen
+                        double testZahl = Math.random();
+                        if (testZahl < 0.5) {
+                            jb.hit();
+                        } else {
+                            jb.noHit();
+                        }
+
+
                     }
                 });
                 buttonList.add(genericButton);
@@ -64,7 +74,6 @@ public class GameGUI {
         }
     }
 
-    // TODO: 24.04.2018 Statt JButtons JButtonWithCoordinates verwenden
     public void addComponents() {
 
         int index = 0;
@@ -92,7 +101,7 @@ public class GameGUI {
 
     public void resetButtons() {
         for (int i = 0; i < buttonList.size(); i++) {
-          buttonList.get(i).resetButton();
+            buttonList.get(i).resetButton();
         }
         topLevelPanel.revalidate();
         topLevelPanel.repaint();
@@ -192,7 +201,7 @@ public class GameGUI {
         label20.setText("1");
         gridPanel.add(label20, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final com.intellij.uiDesigner.core.Spacer spacer1 = new com.intellij.uiDesigner.core.Spacer();
-        myTurn.add(spacer1, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, 1, new Dimension(200, -1), null, null, 0, false));
+        myTurn.add(spacer1, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, 1, new Dimension(200, -1), null, null, 0, false));
         final JPanel panel1 = new JPanel();
         panel1.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
         myTurn.add(panel1, new com.intellij.uiDesigner.core.GridConstraints(0, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
