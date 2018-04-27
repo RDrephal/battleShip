@@ -1,11 +1,11 @@
 package model;
 
-import java.util.Map;
+import java.util.List;
 
 public class Ship {
 
-    public Map<String, Integer> locations;
-    public Map<String, Integer> hits;
+    public List<Coordinates> locations;
+    public List<Coordinates> hits;
     public Integer length;
     public String name;
     public Boolean sunken;
@@ -15,31 +15,36 @@ public class Ship {
         this.name = name;
     }
 
+    public Boolean prefSunkenStatus(){
+        if(getHits().size() == getLocations().size()){
+            return true;
+        }
+        return false;
+    }
+
     public Integer getLength() {
         return length;
     }
 
-    public Map<String, Integer> getLocations() {
+    public List<Coordinates> getLocations() {
         return locations;
     }
 
-    public void setLocations(Map<String, Integer> locations) {
+    public void setLocations(List<Coordinates> locations) {
         this.locations = locations;
     }
 
     public Boolean getSunken() {
+        sunken = prefSunkenStatus();
         return sunken;
     }
 
-    public void setSunken(Boolean sunken) {
-        this.sunken = sunken;
-    }
 
-    public Map<String, Integer> getHits() {
+    public List<Coordinates> getHits() {
         return hits;
     }
 
-    public void setHits(Map<String, Integer> hits) {
+    public void setHits(List<Coordinates> hits) {
         this.hits = hits;
     }
 
