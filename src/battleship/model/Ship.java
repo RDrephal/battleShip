@@ -1,4 +1,4 @@
-package model;
+package battleship.model;
 
 import java.util.List;
 

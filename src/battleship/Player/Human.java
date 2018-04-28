@@ -1,9 +1,9 @@
-package Player;
+package battleship.Player;
 
-import model.Coordinates;
-import model.Playerboard;
-import model.Ship;
-import model.ShotEvents;
+import battleship.model.Coordinates;
+import battleship.model.Playerboard;
+import battleship.model.Ship;
+import battleship.model.ShotEvents;
 
 
 public class Human extends Player {

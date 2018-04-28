@@ -1,13 +1,13 @@
-package Player;
+package battleship.Player;
 
-import model.Coordinates;
-import model.Playerboard;
-import model.Ship;
-import model.ShotEvents;
+import battleship.model.Coordinates;
+import battleship.model.Playerboard;
+import battleship.model.Ship;
+import battleship.model.ShotEvents;
 
 import java.util.List;
 
-import static model.ShotEvents.*;
+import static battleship.model.ShotEvents.*;
 
 public abstract class Player {
     protected Playerboard playerboard;

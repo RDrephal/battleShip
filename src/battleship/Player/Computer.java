@@ -1,10 +1,10 @@
-package Player;
+package battleship.Player;
 
-import helper.Helper;
-import model.Coordinates;
-import model.Playerboard;
-import model.Ship;
-import model.ShotEvents;
+import battleship.helper.Helper;
+import battleship.model.Coordinates;
+import battleship.model.Playerboard;
+import battleship.model.Ship;
+import battleship.model.ShotEvents;
 
 import java.util.ArrayList;
 import java.util.List;

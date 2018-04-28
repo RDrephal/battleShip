@@ -1,7 +1,7 @@
-package gameplay;
+package battleship.gameplay;
 
-import Player.*;
-import model.ShotEvents;
+import battleship.Player.*;
+import battleship.model.ShotEvents;
 
 import java.util.Random;
 
@@ -13,7 +13,7 @@ public class BattleShip {
         ShotEvents gameOver=null;
         Random r = new Random();
         Integer beginner = r.nextInt(2);
-        //Random beginner Player == 1; Computer ==0
+        //Random beginner battleship.Player == 1; Computer ==0
         while(gameOver != ShotEvents.WINNER){
             if(beginner == 0) {
                 gameOver = computer.fire(human.getPlayerboard(),null);
