@@ -1,7 +1,7 @@
 package battleship.model;
 
-import battleship.Player.Human;
-import battleship.Player.Player;
+import battleship.player.Human;
+import battleship.player.Player;
 import battleship.helper.Helper;
 
 import java.util.*;

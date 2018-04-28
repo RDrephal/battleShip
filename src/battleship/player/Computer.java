@@ -1,4 +1,4 @@
-package battleship.Player;
+package battleship.player;
 
 import battleship.helper.Helper;
 import battleship.model.Coordinates;
