@@ -9,12 +9,12 @@ import java.util.*;
 
 public class Playerboard {
     public Player owner;
-    private List<Ship> playerboard;
+    private List<Ship> shipsOnBoard;
 
 
     public Playerboard(Player owner) {
         this.owner = owner;
-        playerboard =  new ArrayList<>();
+        shipsOnBoard =  new ArrayList<>();
 
     }
 
@@ -67,17 +67,19 @@ public class Playerboard {
     }
 
     public Boolean prefAllShipsSunken(){
-        List<Ship> ships = getPlayerboard();
-        for ( Ship s : ships) {
-            if(!s.getSunken()) {
-                return true;
+        List<Ship> ships = getShipsOnBoard();
+        int sunkenShips = 0;
+        for (Ship s : ships) {
+            if(s.getSunken()) {
+                sunkenShips++;
             }
         }
-        return false;
+        System.out.println(sunkenShips);
+        return sunkenShips == ships.size();
     }
 
     private Boolean checkCoordinates(Integer x, Integer y) {
-        List<Ship> ships= getPlayerboard();
+        List<Ship> ships= getShipsOnBoard();
         for ( Ship s : ships) {
             List<Coordinates> locations = s.getLocations();
             for (Coordinates a: locations) {
@@ -100,18 +102,18 @@ public class Playerboard {
         this.owner = owner;
     }
 
-    public List<Ship> getPlayerboard() {
-        return playerboard;
+    public List<Ship> getShipsOnBoard() {
+        return shipsOnBoard;
     }
 
     public void addToPlayerboard(Ship ship) {
-        List<Ship> playerboard = getPlayerboard();
+        List<Ship> playerboard = getShipsOnBoard();
         playerboard.add(ship);
-        setPlayerboard(playerboard);
+        setShipsOnBoard(playerboard);
     }
 
-    public void setPlayerboard(List<Ship> playerboard) {
-        this.playerboard = playerboard;
+    public void setShipsOnBoard(List<Ship> shipsOnBoard) {
+        this.shipsOnBoard = shipsOnBoard;
     }
 
     public static void main(String[] args){

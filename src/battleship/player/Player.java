@@ -40,10 +40,11 @@ public abstract class Player {
             addNewShips(ships[i][0],ships[i][1]);
     }
 
+    // TODO: change parameter to Coordinates
     protected ShotEvent getShotEvent(Playerboard enemy, Coordinates shot, String fireX, Integer fireY) {
         ShotEvent result = WATER;
 
-        for(Ship ship : enemy.getPlayerboard()) {
+        for(Ship ship : enemy.getShipsOnBoard()) {
             for (Coordinates c : ship.getLocations()) {
                 String shipX = c.getX();
                 Integer shipY = c.getY();
@@ -63,7 +64,7 @@ public abstract class Player {
 
                         System.out.println("DESTROYED");
 
-                        if(enemy.prefAllShipsSunken()) {
+                        if (enemy.prefAllShipsSunken()) {
                             result = WINNER;
                             System.out.println("WINNER");
                         }
