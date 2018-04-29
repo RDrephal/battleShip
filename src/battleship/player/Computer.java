@@ -36,9 +36,7 @@ public class Computer extends Player {
         Coordinates shot = listFire.get(shotIndex);
         listFire.remove(shotIndex);
         setFiring(listFire);
-        String fireX = shot.getX();
-        Integer fireY = shot.getY();
-        return getShotEvent(enemy, shot, fireX, fireY);
+        return getShotEvent(enemy, shot);
     }
 
     @Override
@@ -47,9 +45,8 @@ public class Computer extends Player {
     }
 
     @Override
-    protected void addNewShips(String s, String s1) {
-        Integer i1 = Integer.valueOf(s1);
-        Ship ship = new Ship(s,i1);
+    protected void addNewShips(String name, int length) {
+        Ship ship = new Ship(name, length);
         playerboard.autoAddShipToPlayerboard(ship);
         System.out.println("Computer: " + ship.getLocations());
     }

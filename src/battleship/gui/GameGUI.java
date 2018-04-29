@@ -43,6 +43,16 @@ public class GameGUI {
     }
 
     public GameGUI() {
+        // TODO: add player board
+        // easiest would be just as Strings that get redrawn every turn
+        // like:
+        // 0 = = 0 0 0
+        // = 0 0 X = 0
+        // 0 0 0 0 0 =
+        // = = X 0 0 =
+        // 0 0 0 0 0 0
+        // 0 = = = X 0
+
         restartButton.setName("restartButton");
         restartButton.setText("Restart");
 
@@ -53,6 +63,7 @@ public class GameGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 resetBoard();
+                setUpGame();
             }
         });
 
@@ -87,13 +98,25 @@ public class GameGUI {
                         Coordinates shotCoords = new Coordinates(jb.getXValue(), jb.getYValue());
                         ShotEvent eventHuman = human.fire(computer.getPlayerboard(), shotCoords);
 
+                        // TODO: color sunken ships
                         if (eventHuman == ShotEvent.HIT) {
                             jb.hit();
                         } else if (eventHuman == ShotEvent.DESTROYED) {
                             jb.hit();
-                            System.out.println("You destroyed a ship");
+                            JOptionPane.showMessageDialog(null, "You destroyed a ship");
                         } else if (eventHuman == ShotEvent.WINNER){
                             jb.hit();
+
+                            int dialogButton = JOptionPane.YES_NO_OPTION;
+                            int dialogResult = JOptionPane.showConfirmDialog(null, "You Won. Restart game?", "Winner", dialogButton);
+
+                            if (dialogResult == JOptionPane.YES_OPTION) {
+                                resetBoard();
+                                setUpGame();
+                            } else {
+                                System.exit(100);
+                            }
+
                             System.out.println("You won the game");
                         } else {
                             jb.noHit();

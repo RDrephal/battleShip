@@ -13,18 +13,15 @@ public class Human extends Player {
     }
 
     @Override
-    protected void addNewShips(String s, String s1) {
+    protected void addNewShips(String name, int length) {
         //Replace in the next lession
-        Integer i1= Integer.valueOf(s1);
-        Ship ship = new Ship(s,i1);
+        Ship ship = new Ship(name, length);
         playerboard.autoAddShipToPlayerboard(ship);
         System.out.println("Human: " + ship.getLocations());
     }
 
     @Override
     public ShotEvent fire(Playerboard enemy, Coordinates coordinates) {
-        String fireX = coordinates.getX();
-        Integer fireY = coordinates.getY();
-        return getShotEvent(enemy, coordinates, fireX, fireY);
+        return getShotEvent(enemy, coordinates);
     }
 }

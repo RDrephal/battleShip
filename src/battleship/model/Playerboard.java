@@ -66,6 +66,11 @@ public class Playerboard {
         addToPlayerboard(ship);
     }
 
+    /**
+     * compare size of list with all ships with count of sunken ships
+     * if size = count -> all ships are destroyed
+     * @return boolean whether all ships were destroyed
+     */
     public Boolean prefAllShipsSunken(){
         List<Ship> ships = getShipsOnBoard();
         int sunkenShips = 0;
@@ -74,7 +79,7 @@ public class Playerboard {
                 sunkenShips++;
             }
         }
-        System.out.println(sunkenShips);
+        System.out.println("Sunken ships: " + sunkenShips);
         return sunkenShips == ships.size();
     }
 

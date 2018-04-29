@@ -5,7 +5,9 @@ import battleship.model.Playerboard;
 import battleship.model.Ship;
 import battleship.model.ShotEvent;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static battleship.model.ShotEvent.*;
 
@@ -24,7 +26,14 @@ public abstract class Player {
     public Player() {
         playerboard = new Playerboard(this);
 
-
+        Map<String, Integer> shipMap = new HashMap<>();
+        shipMap.put("Aircraft Carrier", 5);
+        shipMap.put("Battleship", 4);
+        shipMap.put("Cruiser", 3);
+        shipMap.put("Submarine", 3);
+        shipMap.put("Patrol Boat", 2);
+        shipMap.put("Corvette", 2);
+        shipMap.put("Rescue Ship", 1);
 
         ships = new String[][]{
                 {"Aircraft Carrier", "5"},
@@ -36,12 +45,12 @@ public abstract class Player {
                 {"Boat", "1"},
         };
 
-        for (int i = 0; i <= ships.length-1; i++)
-            addNewShips(ships[i][0],ships[i][1]);
+        for (Map.Entry<String, Integer> entry : shipMap.entrySet()) {
+            addNewShips(entry.getKey(), entry.getValue());
+        }
     }
 
-    // TODO: change parameter to Coordinates
-    protected ShotEvent getShotEvent(Playerboard enemy, Coordinates shot, String fireX, Integer fireY) {
+    protected ShotEvent getShotEvent(Playerboard enemy, Coordinates shot) {
         ShotEvent result = WATER;
 
         for(Ship ship : enemy.getShipsOnBoard()) {
@@ -49,7 +58,7 @@ public abstract class Player {
                 String shipX = c.getX();
                 Integer shipY = c.getY();
 
-                if (shipX.equals(fireX) && shipY == fireY) {
+                if (shipX.equals(shot.getX()) && shipY == shot.getY()) {
 
                     List<Coordinates> ls = ship.getHits();
                     ls.add(shot);
@@ -62,7 +71,7 @@ public abstract class Player {
                     if (ship.getSunken()) {
                         result = DESTROYED;
 
-                        System.out.println("DESTROYED");
+                        System.out.println("DESTROYED: " + ship.getName());
 
                         if (enemy.prefAllShipsSunken()) {
                             result = WINNER;
@@ -80,5 +89,5 @@ public abstract class Player {
         return result;
     }
 
-    protected abstract void addNewShips(String s, String s1);
+    protected abstract void addNewShips(String name, int length);
 }
