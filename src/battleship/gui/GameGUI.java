@@ -99,6 +99,7 @@ public class GameGUI {
                         ShotEvent eventHuman = human.fire(computer.getPlayerboard(), shotCoords);
 
                         // TODO: color sunken ships
+                        // TODO: a field can be clicked multiple times at the moment
                         if (eventHuman == ShotEvent.HIT) {
                             jb.hit();
                         } else if (eventHuman == ShotEvent.DESTROYED) {
@@ -126,11 +127,19 @@ public class GameGUI {
                         ShotEvent eventComputer = computer.fire(human.getPlayerboard());
 
                         if (eventComputer == ShotEvent.HIT) {
-                            System.out.println("You were hit");
+                            JOptionPane.showMessageDialog(null, "One of your ships was hit");
                         } else if (eventComputer == ShotEvent.DESTROYED) {
-                            System.out.println("Your ship was destroyed");
+                            JOptionPane.showMessageDialog(null, "Your opponent destroyed a ship");
                         } else if (eventComputer == ShotEvent.WINNER) {
-                            System.out.println("You lost");
+                            int dialogButton = JOptionPane.YES_NO_OPTION;
+                            int dialogResult = JOptionPane.showConfirmDialog(null, "You Lost. Restart game?", "Loser", dialogButton);
+
+                            if (dialogResult == JOptionPane.YES_OPTION) {
+                                resetBoard();
+                                setUpGame();
+                            } else {
+                                System.exit(100);
+                            }
                         } else {
                             System.out.println("Lucky you");
                         }
