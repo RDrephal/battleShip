@@ -3,7 +3,7 @@ package battleship.player;
 import battleship.model.Coordinates;
 import battleship.model.Playerboard;
 import battleship.model.Ship;
-import battleship.model.ShotEvents;
+import battleship.model.ShotEvent;
 
 
 public class Human extends Player {
@@ -18,12 +18,13 @@ public class Human extends Player {
         Integer i1= Integer.valueOf(s1);
         Ship ship = new Ship(s,i1);
         playerboard.autoAddShipToPlayerboard(ship);
+        System.out.println("Human: " + ship.getLocations());
     }
 
     @Override
-    public ShotEvents fire(Playerboard enemy, Coordinates coordinates) {
+    public ShotEvent fire(Playerboard enemy, Coordinates coordinates) {
         String fireX = coordinates.getX();
         Integer fireY = coordinates.getY();
-        return getShotEvent(enemy,coordinates, fireX, fireY);
+        return getShotEvent(enemy, coordinates, fireX, fireY);
     }
 }

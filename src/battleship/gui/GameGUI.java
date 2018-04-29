@@ -1,6 +1,12 @@
 package battleship.gui;
 
+import battleship.gameplay.GameState;
 import battleship.model.Coordinates;
+import battleship.model.Playerboard;
+import battleship.model.Ship;
+import battleship.model.ShotEvent;
+import battleship.player.Computer;
+import battleship.player.Human;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,6 +17,12 @@ import java.util.LinkedList;
 
 
 public class GameGUI {
+
+    private GameState state;
+    private Computer computer;
+    private Human human;
+    private Playerboard boardHuman;
+    private Playerboard boardComputer;
 
     private JPanel topLevelPanel;
     private JPanel cards;
@@ -43,6 +55,15 @@ public class GameGUI {
                 resetBoard();
             }
         });
+
+        setUpGame();
+    }
+
+    public void setUpGame() {
+        computer = new Computer();
+        human = new Human();
+
+        state = GameState.PLAYER_TURN;
     }
 
     //The dynamically generated elements of the UI are created
@@ -58,18 +79,38 @@ public class GameGUI {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         //Do the stuff
-                        System.out.println("Klick!");
+                        System.out.println("Aktion ausgelöst");
                         JButtonWithCoordinates jb = (JButtonWithCoordinates) e.getSource();
                         System.out.println(jb.getXValue() + " " + jb.getYValue());
 
-                        //wenn getroffen
-                        double testZahl = Math.random();
-                        if (testZahl < 0.5) {
+                        // Player Turn
+                        Coordinates shotCoords = new Coordinates(jb.getXValue(), jb.getYValue());
+                        ShotEvent eventHuman = human.fire(computer.getPlayerboard(), shotCoords);
+
+                        if (eventHuman == ShotEvent.HIT) {
                             jb.hit();
+                        } else if (eventHuman == ShotEvent.DESTROYED) {
+                            jb.hit();
+                            System.out.println("You destroyed a ship");
+                        } else if (eventHuman == ShotEvent.WINNER){
+                            jb.hit();
+                            System.out.println("You won the game");
                         } else {
                             jb.noHit();
                         }
 
+                        // Computer Turn
+                        ShotEvent eventComputer = computer.fire(human.getPlayerboard());
+
+                        if (eventComputer == ShotEvent.HIT) {
+                            System.out.println("You were hit");
+                        } else if (eventComputer == ShotEvent.DESTROYED) {
+                            System.out.println("Your ship was destroyed");
+                        } else if (eventComputer == ShotEvent.WINNER) {
+                            System.out.println("You lost");
+                        } else {
+                            System.out.println("Lucky you");
+                        }
 
                     }
                 });

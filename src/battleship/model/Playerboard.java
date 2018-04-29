@@ -44,7 +44,7 @@ public class Playerboard {
                         break;
                     }
                 }
-            }else{
+            } else {
                 Integer x = r.nextInt(alphabethLength)+1;
                 Integer y = r.nextInt(coordinatesLength - (shipSize-1))+1;
                 y = y - 1;
@@ -53,7 +53,7 @@ public class Playerboard {
                     if (checkCoordinates(x, y) == true) {
                         String alpha = Helper.toAlpha(x-1);
                         currentCoordinates.add(new Coordinates(alpha, y));
-                    }else{
+                    } else {
                         break;
                     }
                 }
@@ -69,7 +69,7 @@ public class Playerboard {
     public Boolean prefAllShipsSunken(){
         List<Ship> ships = getPlayerboard();
         for ( Ship s : ships) {
-            if(s.getSunken() == false){
+            if(!s.getSunken()) {
                 return true;
             }
         }

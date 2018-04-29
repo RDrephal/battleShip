@@ -3,11 +3,11 @@ package battleship.player;
 import battleship.model.Coordinates;
 import battleship.model.Playerboard;
 import battleship.model.Ship;
-import battleship.model.ShotEvents;
+import battleship.model.ShotEvent;
 
 import java.util.List;
 
-import static battleship.model.ShotEvents.*;
+import static battleship.model.ShotEvent.*;
 
 public abstract class Player {
     protected Playerboard playerboard;
@@ -15,7 +15,7 @@ public abstract class Player {
     protected List<Ship> listShips;
     protected boolean alive;
 
-    public abstract ShotEvents fire(Playerboard enemy, Coordinates coordinates);
+    public abstract ShotEvent fire(Playerboard enemy, Coordinates coordinates);
 
     public Playerboard getPlayerboard() {
         return playerboard;
@@ -23,6 +23,9 @@ public abstract class Player {
 
     public Player() {
         playerboard = new Playerboard(this);
+
+
+
         ships = new String[][]{
                 {"Aircraft Carrier", "5"},
                 {"Aircraft Carrier", "4"},
@@ -37,32 +40,42 @@ public abstract class Player {
             addNewShips(ships[i][0],ships[i][1]);
     }
 
-    protected ShotEvents getShotEvent(Playerboard enemy, Coordinates shot, String fireX, Integer fireY) {
-        ShotEvents result = WATER;
+    protected ShotEvent getShotEvent(Playerboard enemy, Coordinates shot, String fireX, Integer fireY) {
+        ShotEvent result = WATER;
 
-        for(Ship ship :enemy.getPlayerboard()){
-            for (Coordinates c : ship.getLocations()){
+        for(Ship ship : enemy.getPlayerboard()) {
+            for (Coordinates c : ship.getLocations()) {
                 String shipX = c.getX();
                 Integer shipY = c.getY();
 
-                if (shipX ==fireX && shipY == fireY){
+                if (shipX.equals(fireX) && shipY == fireY) {
 
                     List<Coordinates> ls = ship.getHits();
                     ls.add(shot);
                     ship.setHits(ls);
                     result = HIT;
 
-                    //Prüfen ob versenkt
-                    if (ship.getSunken()){
-                        result = DESTROY;
+                    System.out.println("HIT");
 
-                        if(enemy.prefAllShipsSunken()){
+                    //Prüfen ob versenkt
+                    if (ship.getSunken()) {
+                        result = DESTROYED;
+
+                        System.out.println("DESTROYED");
+
+                        if(enemy.prefAllShipsSunken()) {
                             result = WINNER;
+                            System.out.println("WINNER");
                         }
                     }
                 }
             }
         }
+
+        if (result == ShotEvent.WATER) {
+            System.out.println("WATER");
+        }
+
         return result;
     }
 
