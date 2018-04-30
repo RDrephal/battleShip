@@ -18,6 +18,11 @@ public class Playerboard {
 
     }
 
+    /**
+     * add ship automaticly to the own board
+     * with localisation control under game rules
+     * @param ship
+     */
     public void autoAddShipToPlayerboard(Ship ship){
         List<Coordinates> currentCoordinates = new ArrayList<>();
         Integer alphabethLength= Helper.Alphabet.length;
@@ -83,6 +88,12 @@ public class Playerboard {
         return sunkenShips == ships.size();
     }
 
+    /**
+     * control the game rules
+     * @param x
+     * @param y
+     * @return the decision
+     */
     private Boolean checkCoordinates(Integer x, Integer y) {
         List<Ship> ships= getShipsOnBoard();
         for ( Ship s : ships) {
@@ -111,6 +122,10 @@ public class Playerboard {
         return shipsOnBoard;
     }
 
+    /**
+     * for adding ship to board
+     * @param ship
+     */
     public void addToPlayerboard(Ship ship) {
         List<Ship> playerboard = getShipsOnBoard();
         playerboard.add(ship);

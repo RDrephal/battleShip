@@ -26,6 +26,11 @@ public class Computer extends Player {
         setFiring(firing);
     }
 
+    /**
+     * Computer needs randomly fire shots
+     * @param enemy
+     * @return ShotEvent
+     */
     public ShotEvent fire(Playerboard enemy) {
         //Mögliche Schüsse in der Liste listFire. Vorerst  nur Random Coordinates
 
@@ -43,7 +48,11 @@ public class Computer extends Player {
     public ShotEvent fire(Playerboard enemy, Coordinates coordinates) {
         return null;
     }
-
+    /**
+     * Add new Ships to the Board Randomly
+     * @param name
+     * @param length
+     */
     @Override
     protected void addNewShips(String name, int length) {
         Ship ship = new Ship(name, length);

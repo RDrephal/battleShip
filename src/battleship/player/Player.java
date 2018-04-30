@@ -11,6 +11,9 @@ import java.util.Map;
 
 import static battleship.model.ShotEvent.*;
 
+/**
+ * Parent of Computer and Human
+ */
 public abstract class Player {
     protected Playerboard playerboard;
     protected String[][] ships;
@@ -19,6 +22,10 @@ public abstract class Player {
 
     public abstract ShotEvent fire(Playerboard enemy, Coordinates coordinates);
 
+    /**
+     *
+     * @return the playerBoard from the Player
+     */
     public Playerboard getPlayerboard() {
         return playerboard;
     }
@@ -50,6 +57,12 @@ public abstract class Player {
         }
     }
 
+    /**
+     * Method for hit control
+     * @param enemy
+     * @param shot
+     * @return ShotEvent
+     */
     protected ShotEvent getShotEvent(Playerboard enemy, Coordinates shot) {
         ShotEvent result = WATER;
 

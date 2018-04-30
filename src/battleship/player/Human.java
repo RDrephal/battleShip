@@ -12,6 +12,11 @@ public class Human extends Player {
         super();
     }
 
+    /**
+     * Add new Ships to the Board Randomly
+     * @param name
+     * @param length
+     */
     @Override
     protected void addNewShips(String name, int length) {
         //Replace in the next lession
@@ -20,6 +25,12 @@ public class Human extends Player {
         System.out.println("Human: " + ship.getLocations());
     }
 
+    /**
+     * Fire from the Human uses hit controler
+     * @param enemy
+     * @param coordinates
+     * @return ShotEvent
+     */
     @Override
     public ShotEvent fire(Playerboard enemy, Coordinates coordinates) {
         return getShotEvent(enemy, coordinates);
