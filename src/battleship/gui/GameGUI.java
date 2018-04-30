@@ -119,7 +119,7 @@ public class GameGUI {
         resetButtons();
     }
 
-    //Converts coordinates (int,int) to (string,int)
+    //Converts coordinates (int,int) to (string,int) | static to be accesses from everywhere without thee need for an object of GameGUI
     public static Coordinates convertCoordinates(int x, int y) {
         String sx = "";
 
