@@ -1,7 +1,7 @@
 package battleship.gameplay;
 
 import battleship.player.*;
-import battleship.model.ShotEvents;
+import battleship.model.ShotEvent;
 
 import java.util.Random;
 
@@ -10,20 +10,20 @@ public class BattleShip {
     public void startGame(){
         Player human = new Human();
         Player computer = new Computer();
-        ShotEvents gameOver=null;
+        ShotEvent gameOver=null;
         Random r = new Random();
         Integer beginner = r.nextInt(2);
         //Random beginner battleship.player == 1; Computer ==0
-        while(gameOver != ShotEvents.WINNER){
+        while(gameOver != ShotEvent.WINNER){
             if(beginner == 0) {
                 gameOver = computer.fire(human.getPlayerboard(),null);
-                if(gameOver ==ShotEvents.WINNER){
+                if(gameOver == ShotEvent.WINNER){
                     return;
                 }
                 gameOver = human.fire(computer.getPlayerboard(),null);
             }else{
                 gameOver = human.fire(computer.getPlayerboard(),null);
-                if(gameOver ==ShotEvents.WINNER){
+                if(gameOver == ShotEvent.WINNER){
                     return;
                 }
                 gameOver = computer.fire(human.getPlayerboard(),null);

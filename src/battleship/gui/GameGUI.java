@@ -1,6 +1,12 @@
 package battleship.gui;
 
+import battleship.gameplay.GameState;
 import battleship.model.Coordinates;
+import battleship.model.Playerboard;
+import battleship.model.Ship;
+import battleship.model.ShotEvent;
+import battleship.player.Computer;
+import battleship.player.Human;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,6 +17,12 @@ import java.util.LinkedList;
 
 
 public class GameGUI {
+
+    private GameState state;
+    private Computer computer;
+    private Human human;
+    private Playerboard boardHuman;
+    private Playerboard boardComputer;
 
     private JPanel topLevelPanel;
     private JPanel cards;
@@ -31,6 +43,16 @@ public class GameGUI {
     }
 
     public GameGUI() {
+        // TODO: add player board
+        // easiest would be just as Strings that get redrawn every turn
+        // like:
+        // 0 = = 0 0 0
+        // = 0 0 X = 0
+        // 0 0 0 0 0 =
+        // = = X 0 0 =
+        // 0 0 0 0 0 0
+        // 0 = = = X 0
+
         restartButton.setName("restartButton");
         restartButton.setText("Restart");
 
@@ -41,8 +63,18 @@ public class GameGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 resetBoard();
+                setUpGame();
             }
         });
+
+        setUpGame();
+    }
+
+    public void setUpGame() {
+        computer = new Computer();
+        human = new Human();
+
+        state = GameState.PLAYER_TURN;
     }
 
     //The dynamically generated elements of the UI are created
@@ -58,18 +90,59 @@ public class GameGUI {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         //Do the stuff
-                        System.out.println("Klick!");
+                        System.out.println("Aktion ausgelöst");
                         JButtonWithCoordinates jb = (JButtonWithCoordinates) e.getSource();
                         System.out.println(jb.getXValue() + " " + jb.getYValue());
 
-                        //wenn getroffen
-                        double testZahl = Math.random();
-                        if (testZahl < 0.5) {
+                        // Player Turn
+                        Coordinates shotCoords = new Coordinates(jb.getXValue(), jb.getYValue());
+                        ShotEvent eventHuman = human.fire(computer.getPlayerboard(), shotCoords);
+
+                        // TODO: color sunken ships
+                        // TODO: a field can be clicked multiple times at the moment
+                        if (eventHuman == ShotEvent.HIT) {
                             jb.hit();
+                        } else if (eventHuman == ShotEvent.DESTROYED) {
+                            jb.hit();
+                            JOptionPane.showMessageDialog(null, "You destroyed a ship");
+                        } else if (eventHuman == ShotEvent.WINNER){
+                            jb.hit();
+
+                            int dialogButton = JOptionPane.YES_NO_OPTION;
+                            int dialogResult = JOptionPane.showConfirmDialog(null, "You Won. Restart game?", "Winner", dialogButton);
+
+                            if (dialogResult == JOptionPane.YES_OPTION) {
+                                resetBoard();
+                                setUpGame();
+                            } else {
+                                System.exit(100);
+                            }
+
+                            System.out.println("You won the game");
                         } else {
                             jb.noHit();
                         }
 
+                        // Computer Turn
+                        ShotEvent eventComputer = computer.fire(human.getPlayerboard());
+
+                        if (eventComputer == ShotEvent.HIT) {
+                            JOptionPane.showMessageDialog(null, "One of your ships was hit");
+                        } else if (eventComputer == ShotEvent.DESTROYED) {
+                            JOptionPane.showMessageDialog(null, "Your opponent destroyed a ship");
+                        } else if (eventComputer == ShotEvent.WINNER) {
+                            int dialogButton = JOptionPane.YES_NO_OPTION;
+                            int dialogResult = JOptionPane.showConfirmDialog(null, "You Lost. Restart game?", "Loser", dialogButton);
+
+                            if (dialogResult == JOptionPane.YES_OPTION) {
+                                resetBoard();
+                                setUpGame();
+                            } else {
+                                System.exit(100);
+                            }
+                        } else {
+                            System.out.println("Lucky you");
+                        }
 
                     }
                 });

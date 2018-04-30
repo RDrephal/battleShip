@@ -4,7 +4,7 @@ import battleship.helper.Helper;
 import battleship.model.Coordinates;
 import battleship.model.Playerboard;
 import battleship.model.Ship;
-import battleship.model.ShotEvents;
+import battleship.model.ShotEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,29 +25,30 @@ public class Computer extends Player {
         }
         setFiring(firing);
     }
-    @Override
-    public ShotEvents fire(Playerboard enemy, Coordinates coordinates) {
+
+    public ShotEvent fire(Playerboard enemy) {
         //Mögliche Schüsse in der Liste listFire. Vorerst  nur Random Coordinates
 
-        List<Coordinates>listFire = getFiring();
-        Integer listSize = getFiring().size();
+        List<Coordinates> listFire = getFiring();
+        int listSize = getFiring().size();
         Random r = new Random();
-        Integer shotIndex = r.nextInt(listSize);
+        int shotIndex = r.nextInt(listSize);
         Coordinates shot = listFire.get(shotIndex);
         listFire.remove(shotIndex);
         setFiring(listFire);
-        String fireX = shot.getX();
-        Integer fireY = shot.getY();
-        ShotEvents result = getShotEvent(enemy, shot, fireX, fireY);
-
-        return result;
+        return getShotEvent(enemy, shot);
     }
 
     @Override
-    protected void addNewShips(String s, String s1) {
-        Integer i1= Integer.valueOf(s1);
-        Ship ship = new Ship(s,i1);
+    public ShotEvent fire(Playerboard enemy, Coordinates coordinates) {
+        return null;
+    }
+
+    @Override
+    protected void addNewShips(String name, int length) {
+        Ship ship = new Ship(name, length);
         playerboard.autoAddShipToPlayerboard(ship);
+        System.out.println("Computer: " + ship.getLocations());
     }
 
     public List<Coordinates> getFiring() {

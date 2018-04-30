@@ -9,12 +9,12 @@ import java.util.*;
 
 public class Playerboard {
     public Player owner;
-    private List<Ship> playerboard;
+    private List<Ship> shipsOnBoard;
 
 
     public Playerboard(Player owner) {
         this.owner = owner;
-        playerboard =  new ArrayList<>();
+        shipsOnBoard =  new ArrayList<>();
 
     }
 
@@ -44,7 +44,7 @@ public class Playerboard {
                         break;
                     }
                 }
-            }else{
+            } else {
                 Integer x = r.nextInt(alphabethLength)+1;
                 Integer y = r.nextInt(coordinatesLength - (shipSize-1))+1;
                 y = y - 1;
@@ -53,7 +53,7 @@ public class Playerboard {
                     if (checkCoordinates(x, y) == true) {
                         String alpha = Helper.toAlpha(x-1);
                         currentCoordinates.add(new Coordinates(alpha, y));
-                    }else{
+                    } else {
                         break;
                     }
                 }
@@ -66,18 +66,25 @@ public class Playerboard {
         addToPlayerboard(ship);
     }
 
+    /**
+     * compare size of list with all ships with count of sunken ships
+     * if size = count -> all ships are destroyed
+     * @return boolean whether all ships were destroyed
+     */
     public Boolean prefAllShipsSunken(){
-        List<Ship> ships = getPlayerboard();
-        for ( Ship s : ships) {
-            if(s.getSunken() == false){
-                return true;
+        List<Ship> ships = getShipsOnBoard();
+        int sunkenShips = 0;
+        for (Ship s : ships) {
+            if(s.getSunken()) {
+                sunkenShips++;
             }
         }
-        return false;
+        System.out.println("Sunken ships: " + sunkenShips);
+        return sunkenShips == ships.size();
     }
 
     private Boolean checkCoordinates(Integer x, Integer y) {
-        List<Ship> ships= getPlayerboard();
+        List<Ship> ships= getShipsOnBoard();
         for ( Ship s : ships) {
             List<Coordinates> locations = s.getLocations();
             for (Coordinates a: locations) {
@@ -100,18 +107,18 @@ public class Playerboard {
         this.owner = owner;
     }
 
-    public List<Ship> getPlayerboard() {
-        return playerboard;
+    public List<Ship> getShipsOnBoard() {
+        return shipsOnBoard;
     }
 
     public void addToPlayerboard(Ship ship) {
-        List<Ship> playerboard = getPlayerboard();
+        List<Ship> playerboard = getShipsOnBoard();
         playerboard.add(ship);
-        setPlayerboard(playerboard);
+        setShipsOnBoard(playerboard);
     }
 
-    public void setPlayerboard(List<Ship> playerboard) {
-        this.playerboard = playerboard;
+    public void setShipsOnBoard(List<Ship> shipsOnBoard) {
+        this.shipsOnBoard = shipsOnBoard;
     }
 
     public static void main(String[] args){

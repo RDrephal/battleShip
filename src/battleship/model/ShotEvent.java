@@ -1,8 +1,8 @@
 package battleship.model;
 
-public enum ShotEvents {
+public enum ShotEvent {
     WATER,
     HIT,
-    DESTROY,
+    DESTROYED,
     WINNER
 }

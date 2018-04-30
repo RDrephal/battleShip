@@ -3,11 +3,13 @@ package battleship.player;
 import battleship.model.Coordinates;
 import battleship.model.Playerboard;
 import battleship.model.Ship;
-import battleship.model.ShotEvents;
+import battleship.model.ShotEvent;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import static battleship.model.ShotEvents.*;
+import static battleship.model.ShotEvent.*;
 
 public abstract class Player {
     protected Playerboard playerboard;
@@ -15,7 +17,7 @@ public abstract class Player {
     protected List<Ship> listShips;
     protected boolean alive;
 
-    public abstract ShotEvents fire(Playerboard enemy, Coordinates coordinates);
+    public abstract ShotEvent fire(Playerboard enemy, Coordinates coordinates);
 
     public Playerboard getPlayerboard() {
         return playerboard;
@@ -23,6 +25,16 @@ public abstract class Player {
 
     public Player() {
         playerboard = new Playerboard(this);
+
+        Map<String, Integer> shipMap = new HashMap<>();
+        shipMap.put("Aircraft Carrier", 5);
+        shipMap.put("Battleship", 4);
+        shipMap.put("Cruiser", 3);
+        shipMap.put("Submarine", 3);
+        shipMap.put("Patrol Boat", 2);
+        shipMap.put("Corvette", 2);
+        shipMap.put("Rescue Ship", 1);
+
         ships = new String[][]{
                 {"Aircraft Carrier", "5"},
                 {"Aircraft Carrier", "4"},
@@ -33,38 +45,49 @@ public abstract class Player {
                 {"Boat", "1"},
         };
 
-        for (int i = 0; i <= ships.length-1; i++)
-            addNewShips(ships[i][0],ships[i][1]);
+        for (Map.Entry<String, Integer> entry : shipMap.entrySet()) {
+            addNewShips(entry.getKey(), entry.getValue());
+        }
     }
 
-    protected ShotEvents getShotEvent(Playerboard enemy, Coordinates shot, String fireX, Integer fireY) {
-        ShotEvents result = WATER;
+    protected ShotEvent getShotEvent(Playerboard enemy, Coordinates shot) {
+        ShotEvent result = WATER;
 
-        for(Ship ship :enemy.getPlayerboard()){
-            for (Coordinates c : ship.getLocations()){
+        for(Ship ship : enemy.getShipsOnBoard()) {
+            for (Coordinates c : ship.getLocations()) {
                 String shipX = c.getX();
                 Integer shipY = c.getY();
 
-                if (shipX ==fireX && shipY == fireY){
+                if (shipX.equals(shot.getX()) && shipY == shot.getY()) {
 
                     List<Coordinates> ls = ship.getHits();
                     ls.add(shot);
                     ship.setHits(ls);
                     result = HIT;
 
-                    //Prüfen ob versenkt
-                    if (ship.getSunken()){
-                        result = DESTROY;
+                    System.out.println("HIT");
 
-                        if(enemy.prefAllShipsSunken()){
+                    //Prüfen ob versenkt
+                    if (ship.getSunken()) {
+                        result = DESTROYED;
+
+                        System.out.println("DESTROYED: " + ship.getName());
+
+                        if (enemy.prefAllShipsSunken()) {
                             result = WINNER;
+                            System.out.println("WINNER");
                         }
                     }
                 }
             }
         }
+
+        if (result == ShotEvent.WATER) {
+            System.out.println("WATER");
+        }
+
         return result;
     }
 
-    protected abstract void addNewShips(String s, String s1);
+    protected abstract void addNewShips(String name, int length);
 }
