@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 
 public class GameGUI {
@@ -104,6 +105,8 @@ public class GameGUI {
                             jb.hit();
                         } else if (eventHuman == ShotEvent.DESTROYED) {
                             jb.hit();
+                            List<Coordinates> currentShipCoordinates = human.getCurrentShip().getHits();
+                            showSunkenShip(currentShipCoordinates);
                             JOptionPane.showMessageDialog(null, "You destroyed a ship");
                         } else if (eventHuman == ShotEvent.WINNER){
                             jb.hit();
@@ -148,6 +151,17 @@ public class GameGUI {
                 });
                 buttonList.put(coordString, genericButton);
                 panelList.add(new JPanel()); //The Buttons will be added to the panels (they fill the panels)
+            }
+        }
+    }
+
+    private void showSunkenShip(List<Coordinates> currentShipCoordinates) {
+        for (Coordinates s : currentShipCoordinates) {
+            for(String bk : buttonList.keySet()) {
+                Coordinates coordinates= buttonList.get(bk).getCoords();
+                if (coordinates.getX()== s.getX() && coordinates.getY() == s.getY()){
+                    buttonList.get(bk).setColorRed();
+                }
             }
         }
     }

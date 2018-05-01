@@ -30,11 +30,13 @@ public class JButtonWithCoordinates extends JButton {
     //Change button to indicate a hit
     public void hit(){
         this.setText("X");
+        this.setEnabled(false);
     }
 
     //Change button to indicate a miss
     public void noHit(){
         this.setText("O");
+        this.setEnabled(false);
     }
 
     public void changeColor(int x, int y){
@@ -51,5 +53,9 @@ public class JButtonWithCoordinates extends JButton {
 
     public Coordinates getCoords() {
         return coords;
+    }
+
+    public void setColorRed() {
+        this.setBackground( new Color(255,0,0));
     }
 }

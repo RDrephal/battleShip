@@ -19,6 +19,7 @@ public abstract class Player {
     protected String[][] ships;
     protected List<Ship> listShips;
     protected boolean alive;
+    protected Ship currentShip;
 
     public abstract ShotEvent fire(Playerboard enemy, Coordinates coordinates);
 
@@ -77,12 +78,13 @@ public abstract class Player {
                     ls.add(shot);
                     ship.setHits(ls);
                     result = HIT;
-
+                    setCurrentShip(ship);
                     System.out.println("HIT");
 
                     //Prüfen ob versenkt
                     if (ship.getSunken()) {
                         result = DESTROYED;
+                        setCurrentShip(ship);
 
                         System.out.println("DESTROYED: " + ship.getName());
 
@@ -100,6 +102,14 @@ public abstract class Player {
         }
 
         return result;
+    }
+
+    public Ship getCurrentShip() {
+        return currentShip;
+    }
+
+    public void setCurrentShip(Ship currentShip) {
+        this.currentShip = currentShip;
     }
 
     protected abstract void addNewShips(String name, int length);
