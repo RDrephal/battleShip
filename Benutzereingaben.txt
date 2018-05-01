@@ -1,0 +1,10 @@
+Single Stroke
+
+- Ziehen von Schiffen(Linear), um Schiffe auf Felder selbst zu setzen.
+
+- (Halbkreis), um Schiffe vertikal oder horizontal zu drehen.
+
+
+Sprachbefehle
+- Sprachbefehle wie Neustart (um das Spiel neu zu beginnen).
+- Feuer auf "A2"  (Um auf Koordinaten zu feuern)

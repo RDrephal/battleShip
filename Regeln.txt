@@ -8,6 +8,7 @@ Ereignisse der Schüsse:
 - Wasser
 - Treffer
 - Versenkt
+- Winner
 
 Gewinner ist der, der als erstes alle Schiffe versenkt.
 
@@ -17,15 +18,17 @@ Die Schiffe dürfen nicht über Eck gebaut sein oder Löcher besitzen.
 Die Schiffe dürfen nicht diagonal aufgestellt werden.
 
 Jeder verfügt über insgesamt zehn Schiffe (in Klammern die Größe):
-ein Schlachtschiff (5 Kästchen)
-zwei Kreuzer (je 4 Kästchen)
-drei Zerstörer (je 3 Kästchen)
-vier U-Boote (je 2 Kästchen)
-
+	("Aircraft Carrier", 5);
+       	("Battleship", 4);
+       	("Cruiser", 3);
+       	("Submarine", 3);
+       	("Patrol Boat", 2);
+       	("Corvette", 2);
+	("Rescue Ship",1)
 
 Schüsse: 
 - Treffer mit X markiert
 - Wasser mit O markiert
-
+- zerstörte Schiffe rot(Hintergrund)
 
 Quellen: Wiki https://de.wikipedia.org/wiki/Schiffe_versenken
