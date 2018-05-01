@@ -98,9 +98,7 @@ public class GameGUI {
                         // Player Turn
                         Coordinates shotCoords = new Coordinates(jb.getXValue(), jb.getYValue());
                         ShotEvent eventHuman = human.fire(computer.getPlayerboard(), shotCoords);
-
-                        // TODO: color sunken ships
-                        // TODO: a field can be clicked multiple times at the moment
+                        
                         if (eventHuman == ShotEvent.HIT) {
                             jb.hit();
                         } else if (eventHuman == ShotEvent.DESTROYED) {
