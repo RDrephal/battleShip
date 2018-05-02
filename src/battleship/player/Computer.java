@@ -62,17 +62,7 @@ public class Computer extends Player {
 
 
     public void feedback(ShotEvent event){
-        switch (event){
-            case HIT:
-                thisShotWasHit = true;
-                break;
-            case DESTROYED:
-                anchor = null;
-            case WATER:
-                lastShotWasWater = true;
-                break;
-            default: break;
-        }
+        //Feedback whether the computer hit or not
     }
 
     public List<Coordinates> getFiring() {
