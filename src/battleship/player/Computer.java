@@ -60,6 +60,21 @@ public class Computer extends Player {
         System.out.println("Computer: " + ship.getLocations());
     }
 
+
+    public void feedback(ShotEvent event){
+        switch (event){
+            case HIT:
+                thisShotWasHit = true;
+                break;
+            case DESTROYED:
+                anchor = null;
+            case WATER:
+                lastShotWasWater = true;
+                break;
+            default: break;
+        }
+    }
+
     public List<Coordinates> getFiring() {
         return firing;
     }
