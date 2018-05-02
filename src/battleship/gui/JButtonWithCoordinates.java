@@ -25,6 +25,7 @@ public class JButtonWithCoordinates extends JButton {
     public void resetButton(){
         this.setText("");
         this.setBackground(defaultColor);
+        this.setEnabled(true);
     }
 
     //Change button to indicate a hit
