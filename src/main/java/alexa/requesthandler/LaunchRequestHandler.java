@@ -1,5 +1,6 @@
 package alexa.requesthandler;
 
+import battleship.gui.GameGUI;
 import com.amazon.ask.dispatcher.request.handler.HandlerInput;
 import com.amazon.ask.dispatcher.request.handler.RequestHandler;
 import com.amazon.ask.model.LaunchRequest;
@@ -18,7 +19,8 @@ public class LaunchRequestHandler  implements RequestHandler {
 
     @Override
     public Optional<Response> handle(HandlerInput input) {
-        String speechText = "Hello Player, shot on target";
+        String speechText = "Hello Player, wellcome to the game battleship";
+        GameGUI gameGUI = new GameGUI();
         return input.getResponseBuilder()
                 .withSpeech(speechText)
                 .withSimpleCard("HelloWorld", speechText)
