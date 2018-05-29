@@ -34,7 +34,7 @@ public abstract class Player {
     public Player() {
         playerboard = new Playerboard(this);
 
-        Map<String, Integer> shipMap = new HashMap<>();
+        Map<String, Integer> shipMap = new HashMap<String, Integer>();
         shipMap.put("Aircraft Carrier", 5);
         shipMap.put("Battleship", 4);
         shipMap.put("Cruiser", 3);

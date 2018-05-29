@@ -14,7 +14,7 @@ public class Playerboard {
 
     public Playerboard(Player owner) {
         this.owner = owner;
-        shipsOnBoard =  new ArrayList<>();
+        shipsOnBoard = new ArrayList<Ship>();
 
     }
 
@@ -24,7 +24,7 @@ public class Playerboard {
      * @param ship
      */
     public void autoAddShipToPlayerboard(Ship ship){
-        List<Coordinates> currentCoordinates = new ArrayList<>();
+        List<Coordinates> currentCoordinates = new ArrayList<Coordinates>();
         Integer alphabethLength= Helper.Alphabet.length;
         Integer coordinatesLength= Helper.CoordinateY.length;
         Integer shipSize = ship.getLength();
@@ -35,7 +35,7 @@ public class Playerboard {
             counter++;
 
             Integer horizontal = r.nextInt(2);
-            currentCoordinates = new ArrayList<>();
+            currentCoordinates = new ArrayList<Coordinates>();
             if (horizontal == 0) {
                 Integer x = r.nextInt(alphabethLength - (shipSize-1))+1;
                 Integer y = r.nextInt(coordinatesLength)+1;
@@ -43,7 +43,7 @@ public class Playerboard {
                 for (int i = 0; i <= shipSize-1; i++) {
                     x += 1;
                     if (checkCoordinates(x, y) == true) {
-                        String alpha = Helper.toAlpha(x-1);
+                        String alpha = Helper.toAlpha(x);
                         currentCoordinates.add(new Coordinates(alpha,y));
                     }else{
                         break;
@@ -56,7 +56,7 @@ public class Playerboard {
                 for (int i = 0; i <= shipSize-1; i++) {
                     y += 1;
                     if (checkCoordinates(x, y) == true) {
-                        String alpha = Helper.toAlpha(x-1);
+                        String alpha = Helper.toAlpha(x);
                         currentCoordinates.add(new Coordinates(alpha, y));
                     } else {
                         break;

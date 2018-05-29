@@ -61,7 +61,7 @@ public class GameGUI {
         addComponents();
 
         restartButton.addActionListener(new ActionListener() {
-            @Override
+
             public void actionPerformed(ActionEvent e) {
                 resetBoard();
                 setUpGame();
@@ -86,9 +86,9 @@ public class GameGUI {
         for (int i = 1; i < 11; i++) {
             for (int j = 1; j < 11; j++) {
                 String coordString = String.valueOf(j) + String.valueOf(i);
-                JButtonWithCoordinates genericButton = new JButtonWithCoordinates(new Coordinates(Helper.convertIntegerToString(j), i));
+                JButtonWithCoordinates genericButton = new JButtonWithCoordinates(new Coordinates(Helper.toAlpha(j), i));
                 genericButton.addActionListener(new ActionListener() {  //Listener for the buttons of the game field
-                    @Override
+
                     public void actionPerformed(ActionEvent e) {
                         //Do the stuff
                         System.out.println("Aktion ausgelöst");

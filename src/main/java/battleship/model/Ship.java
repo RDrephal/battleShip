@@ -6,7 +6,7 @@ import java.util.List;
 public class Ship {
 
     public List<Coordinates> locations;
-    public List<Coordinates> hits = new ArrayList<>();
+    public List<Coordinates> hits = new ArrayList<Coordinates>();
     public Integer length;
     public String name;
     public Boolean sunken;

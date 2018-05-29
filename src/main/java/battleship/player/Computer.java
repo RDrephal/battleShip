@@ -16,7 +16,7 @@ public class Computer extends Player {
 
     public Computer(){
         super();
-        firing = new ArrayList<>();
+        firing = new ArrayList<Coordinates>();
 
         for (String s : Helper.Alphabet){
             for(Integer i : Helper.CoordinateY){
