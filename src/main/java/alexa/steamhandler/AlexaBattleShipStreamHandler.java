@@ -1,9 +1,6 @@
 package alexa.steamhandler;
 
-import alexa.requesthandler.CancelandStopIntentHandler;
-import alexa.requesthandler.HelpIntentHandler;
-import alexa.requesthandler.LaunchRequestHandler;
-import alexa.requesthandler.SessionEndedRequestHandler;
+import alexa.requesthandler.*;
 import com.amazon.ask.Skill;
 import com.amazon.ask.SkillStreamHandler;
 import com.amazon.ask.Skills;
@@ -12,7 +9,7 @@ public class AlexaBattleShipStreamHandler extends SkillStreamHandler {
 
     private static Skill getSkill() {
         return Skills.standard()
-                .addRequestHandlers(new CancelandStopIntentHandler(),  new HelpIntentHandler(), new LaunchRequestHandler(), new SessionEndedRequestHandler())
+                .addRequestHandlers(new ShotIntentRequestHandler(), new NewStartIntentRequestHandler(), new CancelandStopIntentHandler(),  new HelpIntentHandler(), new LaunchRequestHandler(), new SessionEndedRequestHandler())
                 .build();
     }
 

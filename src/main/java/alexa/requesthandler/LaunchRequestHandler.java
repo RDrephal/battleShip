@@ -19,8 +19,7 @@ public class LaunchRequestHandler  implements RequestHandler {
 
     @Override
     public Optional<Response> handle(HandlerInput input) {
-        String speechText = "Hello Player, wellcome to the game battleship";
-        GameGUI gameGUI = new GameGUI();
+        String speechText = "Hallo Spieler, ich unterstütze dich beim spielen von Schiffe versenken";
         return input.getResponseBuilder()
                 .withSpeech(speechText)
                 .withSimpleCard("HelloWorld", speechText)

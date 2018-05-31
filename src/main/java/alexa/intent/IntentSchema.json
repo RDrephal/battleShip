@@ -1,0 +1,190 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "schiffe versenken",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": [
+            "Exit",
+            "Schließe das Spiel"
+          ]
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": [
+            "Gib mir einen Hinweis",
+            "Hilf mir"
+          ]
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "ShotIntent",
+          "slots": [
+            {
+              "name": "Letter",
+              "type": "Letter"
+            },
+            {
+              "name": "Number",
+              "type": "AMAZON.NUMBER"
+            }
+          ],
+          "samples": [
+            "Feuer auf {Letter} {Number}",
+            "Schieße auf {Letter} {Number}"
+          ]
+        },
+        {
+          "name": "NewstartIntent",
+          "slots": [],
+          "samples": [
+            "Ein neues Spiel",
+            "Ich möchte nochmal spielen",
+            "Starte das Spiel neu"
+          ]
+        }
+      ],
+      "types": [
+        {
+          "name": "Letter",
+          "values": [
+            {
+              "name": {
+                "value": "Z"
+              }
+            },
+            {
+              "name": {
+                "value": "Y"
+              }
+            },
+            {
+              "name": {
+                "value": "X"
+              }
+            },
+            {
+              "name": {
+                "value": "W"
+              }
+            },
+            {
+              "name": {
+                "value": "V"
+              }
+            },
+            {
+              "name": {
+                "value": "U"
+              }
+            },
+            {
+              "name": {
+                "value": "T"
+              }
+            },
+            {
+              "name": {
+                "value": "S"
+              }
+            },
+            {
+              "name": {
+                "value": "R"
+              }
+            },
+            {
+              "name": {
+                "value": "Q"
+              }
+            },
+            {
+              "name": {
+                "value": "P"
+              }
+            },
+            {
+              "name": {
+                "value": "O"
+              }
+            },
+            {
+              "name": {
+                "value": "N"
+              }
+            },
+            {
+              "name": {
+                "value": "M"
+              }
+            },
+            {
+              "name": {
+                "value": "L"
+              }
+            },
+            {
+              "name": {
+                "value": "K"
+              }
+            },
+            {
+              "name": {
+                "value": "J"
+              }
+            },
+            {
+              "name": {
+                "value": "I"
+              }
+            },
+            {
+              "name": {
+                "value": "H"
+              }
+            },
+            {
+              "name": {
+                "value": "G"
+              }
+            },
+            {
+              "name": {
+                "value": "F"
+              }
+            },
+            {
+              "name": {
+                "value": "E"
+              }
+            },
+            {
+              "name": {
+                "value": "D"
+              }
+            },
+            {
+              "name": {
+                "value": "C"
+              }
+            },
+            {
+              "name": {
+                "value": "B"
+              }
+            },
+            {
+              "name": {
+                "value": "A"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
