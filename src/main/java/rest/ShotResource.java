@@ -18,6 +18,7 @@ public class ShotResource {
         // TODO handle shot here
         // TODO return result of shot, plus opponent information
         // TODO handle exceptions like already used locations etc...
+        System.out.println("Letter: " + letter + " Number: " + number);
         return new ShotModel(number, letter);
     }
 
