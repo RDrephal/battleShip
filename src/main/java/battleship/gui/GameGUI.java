@@ -25,7 +25,7 @@ public class GameGUI {
     private Playerboard boardHuman;
     private Playerboard boardComputer;
 
-    private JPanel topLevelPanel;
+    public JPanel topLevelPanel;
     private JPanel cards;
     private JPanel myTurn;
     private JPanel enemyTurn;
