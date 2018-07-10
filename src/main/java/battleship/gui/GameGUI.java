@@ -348,7 +348,7 @@ public class GameGUI {
 
         @Override
         public void run() {
-            dialog.setVisible(false);
+            dialog.dispose();
         }
     }
 }
