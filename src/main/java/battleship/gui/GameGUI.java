@@ -172,7 +172,7 @@ public class GameGUI {
                 Timer timer = new Timer(timeout_ms, new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        dialog.setVisible(false);
+                        dialog.dispose();
                     }
                 });
                 timer.setRepeats(false);
@@ -339,17 +339,5 @@ public class GameGUI {
         return topLevelPanel;
     }
 
-    public class CloseDialogTask extends TimerTask {
-        private final JDialog dialog;
-
-        public CloseDialogTask(JDialog dialog) {
-            this.dialog = dialog;
-        }
-
-        @Override
-        public void run() {
-            dialog.dispose();
-        }
-    }
 }
 
