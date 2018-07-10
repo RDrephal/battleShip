@@ -14,13 +14,13 @@ public class Computer extends Player {
 
     private List<Coordinates> firing;
 
-    public Computer(){
+    public Computer() {
         super();
         firing = new ArrayList<Coordinates>();
 
-        for (String s : Helper.Alphabet){
-            for(Integer i : Helper.CoordinateY){
-                firing.add(new Coordinates(s,i));
+        for (String s : Helper.Alphabet) {
+            for (Integer i : Helper.CoordinateY) {
+                firing.add(new Coordinates(s, i));
             }
         }
         setFiring(firing);
@@ -28,6 +28,7 @@ public class Computer extends Player {
 
     /**
      * Computer needs randomly fire shots
+     *
      * @param enemy
      * @return ShotEvent
      */
@@ -48,8 +49,10 @@ public class Computer extends Player {
     public ShotEvent fire(Playerboard enemy, Coordinates coordinates) {
         return null;
     }
+
     /**
      * Add new Ships to the Board Randomly
+     *
      * @param name
      * @param length
      */
@@ -61,7 +64,7 @@ public class Computer extends Player {
     }
 
 
-    public void feedback(ShotEvent event){
+    public void feedback(ShotEvent event) {
         //Feedback whether the computer hit or not
     }
 

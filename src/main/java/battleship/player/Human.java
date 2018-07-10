@@ -8,12 +8,13 @@ import battleship.model.ShotEvent;
 
 public class Human extends Player {
 
-    public Human()  {
+    public Human() {
         super();
     }
 
     /**
      * Add new Ships to the Board Randomly
+     *
      * @param name
      * @param length
      */
@@ -27,6 +28,7 @@ public class Human extends Player {
 
     /**
      * Fire from the Human uses hit controler
+     *
      * @param enemy
      * @param coordinates
      * @return ShotEvent

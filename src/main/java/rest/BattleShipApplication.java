@@ -1,6 +1,7 @@
 package rest;
 
 import battleship.gui.GameGUI;
+import battleship.helper.Helper;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -13,7 +14,9 @@ public class BattleShipApplication extends Application<BattleShipConfiguration> 
         new BattleShipApplication().run(args);
 
         JFrame frame = new JFrame("Schiffe Versenken");
-        frame.setContentPane(new GameGUI().topLevelPanel);
+        GameGUI game = new GameGUI();
+        Helper.setActiveGame(game);
+        frame.setContentPane(game.topLevelPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
@@ -32,6 +35,8 @@ public class BattleShipApplication extends Application<BattleShipConfiguration> 
     @Override
     public void run(BattleShipConfiguration battleShipConfiguration, Environment environment) throws Exception {
         final ShotResource resource = new ShotResource();
+        final NewStartResource newstart = new NewStartResource();
         environment.jersey().register(resource);
+        environment.jersey().register(newstart);
     }
 }
