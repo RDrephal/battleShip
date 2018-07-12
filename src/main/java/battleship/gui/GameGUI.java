@@ -1,5 +1,7 @@
 package battleship.gui;
 
+
+
 import battleship.gameplay.GameState;
 import battleship.helper.Helper;
 import battleship.model.Coordinates;
@@ -7,10 +9,12 @@ import battleship.model.Playerboard;
 import battleship.model.ShotEvent;
 import battleship.player.Computer;
 import battleship.player.Human;
+import battleship.helper.Helper;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.geom.Line2D;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -335,7 +339,7 @@ public class GameGUI implements MouseMotionListener, MouseListener {
             int dify = Math.abs((int) timeseries.getLast().getY()-e.getY());
             double euclid = Math.sqrt(difx^2+dify^2);
 
-            if(euclid > 4 && (time-lastTime)>140){
+            if(((time-lastTime)>70 && euclid > 3)){
                 timeseries.add(new Point(e.getX(),e.getY()));
                 lastTime = time;
             }
@@ -347,13 +351,85 @@ public class GameGUI implements MouseMotionListener, MouseListener {
         if(timeseries.size()<4){
             System.out.println("Geste zu kurz!");
         }else{
-            System.out.println("Geste wir nun erkannt");
             System.out.println(timeseries);
-            standardize();
+            LinkedList<Integer> angles = calculateAngles();
+            compareTemplates(angles);
+            //standardize();
             timeseries.clear();
         }
     }
 
+    public LinkedList<Integer> calculateAngles(){
+        LinkedList<Integer> angles = new LinkedList<Integer>();
+        Point one = timeseries.getFirst();
+        for(int i=0;i<timeseries.size();i++){
+            if(i>1){
+                Point two = timeseries.get(i-1);
+                Point three = timeseries.get(i);
+
+                Line2D.Double twoOne = new Line2D.Double(two.getX(),two.getY(),one.getX(),one.getY());
+                Line2D.Double twoThree = new Line2D.Double(two.getX(),two.getY(),three.getX(),three.getY());
+
+                double angle1 = Math.atan2(twoOne.getY1() - twoOne.getY2(),
+                        twoOne.getX1() - twoOne.getX2());
+                double angle2 = Math.atan2(twoThree.getY1() - twoThree.getY2(),
+                        twoThree.getX1() - twoThree.getX2());
+                double angle = Math.toDegrees(angle1-angle2);
+                if (angle < 0) angle += 360;
+
+                angles.add((int)angle);
+            }
+        }
+        return angles;
+
+    }
+
+    //ZEitreihe soll mit templates verglichen werden
+    public void compareTemplates(LinkedList<Integer> angles){
+        System.out.println(angles);
+        System.out.println("Template wird verglichen...");
+        angles.clear();
+        for (int i=0; i<7;i++){
+            angles.add((int)(Math.random()*100)+1); //Nur zum Testen wird die Liste angles überschrieben
+        }
+        int[] template2 =  {145, 79, 38, 63, 95, 270, 212}; //Test Template
+
+        System.out.println("Size" +angles.size()+" "+template2.length);
+        if(angles.size()!=template2.length){
+            //Interpolieren?
+        }
+        LinkedList<Integer> vergleich = new LinkedList<Integer>();
+        for (int i=0;i<angles.size();i++){
+            try{
+                vergleich.add(Math.abs(angles.get(i)-template2[i]));
+            }catch (Exception e){
+                System.out.println("keine elemente mehr in einer der Liste");
+            }
+        }
+        System.out.println("Vergleich: "+ vergleich);
+
+        int distance = dtw(angles, template2, angles.size()-1, template2.length-1);
+        System.out.println("Distanz: "+distance);
+    }
+
+    //Distanz der Zeitreihen soll hier berechnet werden. Rekursiv
+    public int dtw(LinkedList<Integer> series, int[] template, int i, int j){
+        System.out.println("Current index: i: "+ i+ "  j: "+j);
+
+            if (i==0 | j==0){
+                if (Math.abs(series.get(i)-template[j])<Math.PI){
+                    return (int)(1/Math.PI)*Math.abs(series.get(i)-template[j]);
+                }else{
+                    return (int)((1/Math.PI)*(2*Math.PI-Math.abs(series.get(i)-template[j])));
+                }
+
+            }else{
+                return Math.abs(series.get(i)-template[j])+Helper.min(dtw(series, template, i, j-1),dtw(series, template, i-1, j),dtw(series, template, i-1, j-1));
+            }
+        }
+
+
+    //Ungenutzt... Alternativer Ansatz
     public void standardize(){
        double minx = timeseries.getFirst().getX();
        double miny = timeseries.getFirst().getY();
@@ -403,11 +479,11 @@ public class GameGUI implements MouseMotionListener, MouseListener {
          clicktime = System.currentTimeMillis();
     }
 
+    //Entscheidung ob eine Geste ausgeführt wurde
     public void mouseReleased(MouseEvent e) {
         long time = System.currentTimeMillis();
         if((time-clicktime)>500){
             gesture = true;
-            System.out.println("Zeitliche differenz: "+(time-clicktime));
             System.out.println("Geste");
             determineGesture();
         }else{
