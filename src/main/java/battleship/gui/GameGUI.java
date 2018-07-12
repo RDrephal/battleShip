@@ -16,7 +16,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-public class GameGUI implements MouseMotionListener {
+public class GameGUI implements MouseMotionListener, MouseListener {
 
     private GameState state;
     private Computer computer;
@@ -32,8 +32,10 @@ public class GameGUI implements MouseMotionListener {
     private JPanel gridPanel;
     private HashMap<String, JButtonWithCoordinates> buttonList; //Hashmap to access specific buttons
     private LinkedList<JPanel> panelList;
-    private LinkedList<Point> timeline;
+    private LinkedList<Point> timeseries;
     private long lastTime;
+    private long clicktime;
+    private boolean gesture = false;
 
 
     public static void main(String[] args) {
@@ -71,7 +73,8 @@ public class GameGUI implements MouseMotionListener {
 
         //Mouse tracker
         topLevelPanel.addMouseMotionListener(this);
-        timeline = new LinkedList<Point>();
+        topLevelPanel.addMouseListener(this);
+        timeseries = new LinkedList<Point>();
 
         setUpGame();
     }
@@ -324,27 +327,102 @@ public class GameGUI implements MouseMotionListener {
     public void mouseDragged(MouseEvent e) {
 
         long time = System.currentTimeMillis();
-        if(timeline.isEmpty()){
-            timeline.add(new Point(e.getX(),e.getY()));
+        if(timeseries.isEmpty()){
+            timeseries.add(new Point(e.getX(),e.getY()));
             lastTime = time;
         }else{
-            int difx = Math.abs((int)timeline.getLast().getX()-e.getX());
-            int dify = Math.abs((int)timeline.getLast().getY()-e.getY());
+            int difx = Math.abs((int) timeseries.getLast().getX()-e.getX());
+            int dify = Math.abs((int) timeseries.getLast().getY()-e.getY());
             double euclid = Math.sqrt(difx^2+dify^2);
 
             if(euclid > 4 && (time-lastTime)>140){
-                System.out.println("Differenz: "+(time-lastTime));
-                timeline.add(new Point(e.getX(),e.getY()));
+                timeseries.add(new Point(e.getX(),e.getY()));
                 lastTime = time;
             }
         }
 
-        System.out.println(timeline);
+    }
 
+    public void determineGesture(){
+        if(timeseries.size()<4){
+            System.out.println("Geste zu kurz!");
+        }else{
+            System.out.println("Geste wir nun erkannt");
+            System.out.println(timeseries);
+            standardize();
+            timeseries.clear();
+        }
+    }
+
+    public void standardize(){
+       double minx = timeseries.getFirst().getX();
+       double miny = timeseries.getFirst().getY();
+
+       double maxx = timeseries.getFirst().getX();
+       double maxy = timeseries.getFirst().getY();
+
+        for(int i=1;i<timeseries.size();i++){
+            if(timeseries.get(i).getX()<minx){
+                minx=timeseries.get(i).getX();
+            }
+            if (timeseries.get(i).getX()>maxx){
+                maxx = timeseries.get(i).getX();
+            }
+
+            //y-Werte vertauscht, da y-wert klein ist wenn die mouse oben im Fenster ist
+            if(timeseries.get(i).getY()<maxy){
+                maxy = timeseries.get(i).getY();
+            }
+            if (timeseries.get(i).getX()>miny){
+                miny = timeseries.get(i).getX();
+            }
+
+        }
+
+        for(int i=0;i<timeseries.size();i++){
+            double xvalue = timeseries.get(i).getX();
+            double yvalue = timeseries.get(i).getY();
+
+            //Werte auf einer Skala von 0-20
+            double newxvalue = ((xvalue-minx)*20)/(maxx-minx);
+            double newyvalue = ((yvalue-miny)*20)/(maxy-miny);
+            timeseries.get(i).setLocation(newxvalue,newyvalue);
+        }
+        System.out.println(timeseries);
     }
 
     public void mouseMoved(MouseEvent e) {
         //System.out.println("Mouse moved!");
+    }
+
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    public void mousePressed(MouseEvent e) {
+         clicktime = System.currentTimeMillis();
+    }
+
+    public void mouseReleased(MouseEvent e) {
+        long time = System.currentTimeMillis();
+        if((time-clicktime)>500){
+            gesture = true;
+            System.out.println("Zeitliche differenz: "+(time-clicktime));
+            System.out.println("Geste");
+            determineGesture();
+        }else{
+            System.out.println("Keine Geste!");
+            gesture = false;
+            timeseries.clear();
+        }
+    }
+
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    public void mouseExited(MouseEvent e) {
+
     }
 }
 
