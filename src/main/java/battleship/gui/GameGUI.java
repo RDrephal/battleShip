@@ -10,14 +10,13 @@ import battleship.player.Human;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
 
-public class GameGUI {
+public class GameGUI implements MouseMotionListener {
 
     private GameState state;
     private Computer computer;
@@ -33,6 +32,8 @@ public class GameGUI {
     private JPanel gridPanel;
     private HashMap<String, JButtonWithCoordinates> buttonList; //Hashmap to access specific buttons
     private LinkedList<JPanel> panelList;
+    private LinkedList<Point> timeline;
+    private long lastTime;
 
 
     public static void main(String[] args) {
@@ -67,6 +68,10 @@ public class GameGUI {
                 setUpGame();
             }
         });
+
+        //Mouse tracker
+        topLevelPanel.addMouseMotionListener(this);
+        timeline = new LinkedList<Point>();
 
         setUpGame();
     }
@@ -314,6 +319,32 @@ public class GameGUI {
      */
     public JComponent $$$getRootComponent$$$() {
         return topLevelPanel;
+    }
+
+    public void mouseDragged(MouseEvent e) {
+
+        long time = System.currentTimeMillis();
+        if(timeline.isEmpty()){
+            timeline.add(new Point(e.getX(),e.getY()));
+            lastTime = time;
+        }else{
+            int difx = Math.abs((int)timeline.getLast().getX()-e.getX());
+            int dify = Math.abs((int)timeline.getLast().getY()-e.getY());
+            double euclid = Math.sqrt(difx^2+dify^2);
+
+            if(euclid > 4 && (time-lastTime)>140){
+                System.out.println("Differenz: "+(time-lastTime));
+                timeline.add(new Point(e.getX(),e.getY()));
+                lastTime = time;
+            }
+        }
+
+        System.out.println(timeline);
+
+    }
+
+    public void mouseMoved(MouseEvent e) {
+        //System.out.println("Mouse moved!");
     }
 }
 
