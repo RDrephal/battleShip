@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class JButtonWithCoordinates extends JButton {
-    private battleship.model.Coordinates coords;
+    public battleship.model.Coordinates coords;
     private Font font;
     private Color defaultColor;
     private ShotEvent state = ShotEvent.WAIT;

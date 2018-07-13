@@ -80,6 +80,8 @@ public class GameGUI {
     }
 
     public void setUpGame() {
+        Helper.setCurrentPlayerEvent(ShotEvent.WAIT);
+        Helper.setCurrentComputerEvent(ShotEvent.WAIT);
         computer = new Computer();
         human = new Human();
 
@@ -99,8 +101,8 @@ public class GameGUI {
                 genericButton.addActionListener(new ActionListener() {  //Listener for the buttons of the game field
 
                     public void actionPerformed(ActionEvent e) {
-
                         //Do the stuff
+                        System.out.println(Helper.getActiveGame().topLevelPanel.getMousePosition());
                         System.out.println("Aktion ausgelöst");
                         JButtonWithCoordinates jb = (JButtonWithCoordinates) e.getSource();
                         System.out.println(jb.getXValue() + " " + jb.getYValue());
@@ -126,8 +128,8 @@ public class GameGUI {
                             createJOptionPane("You Won. Restart game? I'm restarting the Game now!");
                             resetBoard();
                             setUpGame();
-
                             System.out.println("You won the game");
+                            return;
                         } else {
                             Helper.setCurrentPlayerEvent(eventHuman);
                             jb.noHit(eventHuman);
@@ -149,6 +151,7 @@ public class GameGUI {
                             createJOptionPane("You Loose. Restart game? I'm restarting the Game now!");
                             resetBoard();
                             setUpGame();
+                            return;
                         } else {
                             Helper.setCurrentComputerEvent(eventComputer);
                             System.out.println("Lucky you");
@@ -216,6 +219,10 @@ public class GameGUI {
                 }
             }
         }
+    }
+
+    public JPanel getGridPanel() {
+        return gridPanel;
     }
 
     //The buttons on the game field are resetted to their default appearance

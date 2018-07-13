@@ -36,7 +36,9 @@ public class BattleShipApplication extends Application<BattleShipConfiguration> 
     public void run(BattleShipConfiguration battleShipConfiguration, Environment environment) throws Exception {
         final ShotResource resource = new ShotResource();
         final NewStartResource newstart = new NewStartResource();
+        final ShotResourceOnPosition shotResourceOnPosition = new ShotResourceOnPosition();
         environment.jersey().register(resource);
         environment.jersey().register(newstart);
+        environment.jersey().register(shotResourceOnPosition);
     }
 }

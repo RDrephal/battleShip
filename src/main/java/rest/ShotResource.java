@@ -2,8 +2,7 @@ package rest;
 
 import battleship.gui.JButtonWithCoordinates;
 import battleship.gui.JButtonWithCoordinatesFactory;
-import battleship.helper.Helper;
-import battleship.model.ShotEvent;
+import battleship.helper.AlexaResponseHelper;
 
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -25,20 +24,10 @@ public class ShotResource {
         JButtonWithCoordinates jb = JButtonWithCoordinatesFactory.getJButton(letter, number);
 
         if (jb != null) {
-            if (Helper.getCurrentPlayerEvent() == ShotEvent.WINNER || Helper.getCurrentComputerEvent() == ShotEvent.WINNER) {
-                playerEvent = "GAMEOVER";
-            } else {
-                if (jb.getState() == ShotEvent.WAIT) {
-                    jb.doClick();
-
-
-                    playerEvent = Helper.getCurrentPlayerEvent().toString();
-                    computerEvent = Helper.getCurrentComputerEvent().toString();
-                } else {
-                    playerEvent = "ALLREADYSHOT";
-                }
-            }
-        } else {
+            String[] response = AlexaResponseHelper.getShotResponse(jb, playerEvent);
+            playerEvent = response[0];
+            computerEvent = response[0];
+        }else {
             playerEvent = "NOTEXISTS";
         }
 
