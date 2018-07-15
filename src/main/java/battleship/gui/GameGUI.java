@@ -31,6 +31,7 @@ public class GameGUI {
     private JPanel enemyTurn;
     private JButton restartButton;
     private JPanel gridPanel;
+    public JButton canonButton;
     private HashMap<String, JButtonWithCoordinates> buttonList; //Hashmap to access specific buttons
     private LinkedList<JPanel> panelList;
 

@@ -24,6 +24,14 @@ public class ShotResourceOnPosition {
     public ShotResourceOnPosition() {
     }
 
+    public Boolean place(){
+        Point mousePoint = Helper.getActiveGame().topLevelPanel.getMousePosition();
+        GameGUI game = Helper.getActiveGame();
+        game.topLevelPanel.getComponentAt(mousePoint);
+
+        return true;
+    }
+
     @POST
     public ShotModel shot() {
         String letter = "";

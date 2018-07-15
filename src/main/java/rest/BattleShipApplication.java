@@ -37,8 +37,10 @@ public class BattleShipApplication extends Application<BattleShipConfiguration> 
         final ShotResource resource = new ShotResource();
         final NewStartResource newstart = new NewStartResource();
         final ShotResourceOnPosition shotResourceOnPosition = new ShotResourceOnPosition();
+        final CanonPosition canonPosition = new CanonPosition();
         environment.jersey().register(resource);
         environment.jersey().register(newstart);
         environment.jersey().register(shotResourceOnPosition);
+        environment.jersey().register(canonPosition);
     }
 }
