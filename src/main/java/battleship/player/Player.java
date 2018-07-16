@@ -21,16 +21,6 @@ public abstract class Player {
     protected boolean alive;
     protected Ship currentShip;
 
-    public abstract ShotEvent fire(Playerboard enemy, Coordinates coordinates);
-
-    /**
-     *
-     * @return the playerBoard from the Player
-     */
-    public Playerboard getPlayerboard() {
-        return playerboard;
-    }
-
     public Player() {
         playerboard = new Playerboard(this);
 
@@ -58,8 +48,18 @@ public abstract class Player {
         }
     }
 
+    public abstract ShotEvent fire(Playerboard enemy, Coordinates coordinates);
+
+    /**
+     * @return the playerBoard from the Player
+     */
+    public Playerboard getPlayerboard() {
+        return playerboard;
+    }
+
     /**
      * Method for hit control
+     *
      * @param enemy
      * @param shot
      * @return ShotEvent
@@ -67,7 +67,7 @@ public abstract class Player {
     protected ShotEvent getShotEvent(Playerboard enemy, Coordinates shot) {
         ShotEvent result = WATER;
 
-        for(Ship ship : enemy.getShipsOnBoard()) {
+        for (Ship ship : enemy.getShipsOnBoard()) {
             for (Coordinates c : ship.getLocations()) {
                 String shipX = c.getX();
                 Integer shipY = c.getY();
