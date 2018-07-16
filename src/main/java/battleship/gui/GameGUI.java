@@ -35,6 +35,7 @@ public class GameGUI implements MouseMotionListener, MouseListener {
     private JPanel gridPanel;
 
     private JTextPane gestureTupelPane;
+    private JButton canon;
     private HashMap<String, JButtonWithCoordinates> buttonList; //Hashmap to access specific buttons
     private LinkedList<JPanel> panelList;
     private LinkedList<Point> timeseries;
