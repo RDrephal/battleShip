@@ -2,14 +2,13 @@ package battleship.gui;
 
 
 import battleship.gameplay.GameState;
+import battleship.helper.AlexaResponseHelper;
 import battleship.helper.Helper;
 import battleship.model.Coordinates;
 import battleship.model.ShotEvent;
 import battleship.player.Computer;
 import battleship.player.Human;
 import com.intellij.uiDesigner.core.GridConstraints;
-import com.intellij.uiDesigner.core.GridLayoutManager;
-import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 public class GameGUI implements MouseMotionListener, MouseListener {
 
     public JPanel topLevelPanel;
-    int timeout_ms = 1000;
+    private int timeout_ms = 1000;
     private GameState state;
     private Computer computer;
     private Human human;
@@ -75,10 +74,10 @@ public class GameGUI implements MouseMotionListener, MouseListener {
         //Mouse tracker
         topLevelPanel.addMouseMotionListener(this);
         topLevelPanel.addMouseListener(this);
-        timeseries = new LinkedList<Point>();
-        angles = new LinkedList<Integer>();
-        allNumberTemplates = new LinkedList<LinkedList<int[]>>();
-        allStringTemplates = new LinkedList<LinkedList<int[]>>();
+        timeseries = new LinkedList<>();
+        angles = new LinkedList<>();
+        allNumberTemplates = new LinkedList<>();
+        allStringTemplates = new LinkedList<>();
         createTemplates();
 
         gestureTupel = new Coordinates(null, null);
@@ -109,9 +108,9 @@ public class GameGUI implements MouseMotionListener, MouseListener {
     }
 
     //The dynamically generated elements of the UI are created
-    public void createComponents() {
-        buttonList = new HashMap<String, JButtonWithCoordinates>();
-        panelList = new LinkedList<JPanel>();
+    private void createComponents() {
+        buttonList = new HashMap<>();
+        panelList = new LinkedList<>();
 
         for (int i = 1; i < 11; i++) {
             for (int j = 1; j < 11; j++) {
@@ -209,7 +208,7 @@ public class GameGUI implements MouseMotionListener, MouseListener {
         for (Coordinates s : currentShipCoordinates) {
             for (String bk : buttonList.keySet()) {
                 Coordinates coordinates = buttonList.get(bk).getCoords();
-                if (coordinates.getX() == s.getX() && coordinates.getY() == s.getY()) {
+                if (coordinates.getX().equals(s.getX()) && coordinates.getY().equals(s.getY())) {
                     buttonList.get(bk).setColorRed();
                 }
             }
@@ -217,7 +216,7 @@ public class GameGUI implements MouseMotionListener, MouseListener {
     }
 
     //The dynamically created UI elements get added to the GUI
-    public void addComponents() {
+    private void addComponents() {
 
         int index = 0;
 
@@ -246,7 +245,7 @@ public class GameGUI implements MouseMotionListener, MouseListener {
     }
 
     //The buttons on the game field are resetted to their default appearance
-    public void resetButtons() {
+    private void resetButtons() {
         for (String k : buttonList.keySet()) {
             buttonList.get(k).resetButton();
         }
@@ -281,7 +280,7 @@ public class GameGUI implements MouseMotionListener, MouseListener {
 
     }
 
-    public void determineGesture() {
+    private void determineGesture() {
         if (timeseries.size() < 4) {
             System.out.println("Geste zu kurz!");
         } else {
@@ -295,7 +294,7 @@ public class GameGUI implements MouseMotionListener, MouseListener {
         }
     }
 
-    public void updateTupel(Object value) {
+    private void updateTupel(Object value) {
 
         if (value instanceof String) {
             if (gestureTupel.getX() == null) {
@@ -312,6 +311,16 @@ public class GameGUI implements MouseMotionListener, MouseListener {
                         gestureTupel.setY((Integer) value);
                         gestureTupelPane.setText("Gesture recognition: (" + gestureTupel.getX() + ", " + gestureTupel.getY() + ")");
                     }
+                    System.out.println("Gesture: " + gestureTupel.getX() + gestureTupel.getY());
+
+                    JButtonWithCoordinates jb = JButtonWithCoordinatesFactory.getJButton(gestureTupel.getX(), gestureTupel.getY());
+
+                    String playerEvent = "";
+
+                    if (jb != null) {
+                        String[] response = AlexaResponseHelper.getShotResponse(jb, playerEvent);
+                    }
+
                     gestureTupel.setX(null);
                     gestureTupel.setY(null);
 
@@ -333,8 +342,7 @@ public class GameGUI implements MouseMotionListener, MouseListener {
 
     }
 
-
-    public void calculateAngles() {
+    private void calculateAngles() {
         Point one = timeseries.getFirst();
         for (int i = 0; i < timeseries.size(); i++) {
             if (i > 1) {
@@ -357,10 +365,10 @@ public class GameGUI implements MouseMotionListener, MouseListener {
 
     }
 
-    public void createTemplates() {
+    private void createTemplates() {
         //The Templates for the Numbers 1-10
 
-        LinkedList<int[]> templates1 = new LinkedList<int[]>();
+        LinkedList<int[]> templates1 = new LinkedList<>();
         int[] a = {173, 177, 32, 34, 145, 159, 161, 150, 165};
         int[] b = {188, 164, 46, 33, 173, 170};
         int[] c = {182, 178, 26, 25, 88, 143, 162, 163, 164, 165};
@@ -374,7 +382,7 @@ public class GameGUI implements MouseMotionListener, MouseListener {
         templates1.add(e);
         templates1.add(f);
 
-        LinkedList<int[]> templates2 = new LinkedList<int[]>();
+        LinkedList<int[]> templates2 = new LinkedList<>();
         int[] a2 = {145, 106, 92, 98, 101, 106, 334, 306, 239, 197};
         int[] b2 = {151, 138, 96, 73, 78, 103, 319, 271, 220};
         int[] c2 = {141, 132, 88, 61, 103, 112, 103, 102, 98, 102, 118, 359, 309, 258, 211, 164, 168};
@@ -388,7 +396,7 @@ public class GameGUI implements MouseMotionListener, MouseListener {
         templates2.add(e2);
         templates2.add(f2);
 
-        LinkedList<int[]> templates3 = new LinkedList<int[]>();
+        LinkedList<int[]> templates3 = new LinkedList<>();
         int[] a3 = {138, 120, 95, 75, 75, 277, 239, 189, 142, 97, 89};
         int[] b3 = {148, 121, 100, 69, 69, 32, 268, 242, 197, 159, 132, 78, 69, 51};
         int[] c3 = {140, 117, 79, 49, 67, 242, 187, 143, 88, 74, 55};
@@ -402,7 +410,7 @@ public class GameGUI implements MouseMotionListener, MouseListener {
         templates3.add(e3);
         templates3.add(f3);
 
-        LinkedList<int[]> templates4 = new LinkedList<int[]>();
+        LinkedList<int[]> templates4 = new LinkedList<>();
         int[] a4 = {180, 175, 176, 319, 305, 276, 268, 30, 28, 79, 134};
         int[] b4 = {180, 180, 180, 311, 259, 288, 285, 19, 22, 88, 136, 148, 141};
         int[] c4 = {179, 179, 323, 323, 284, 290, 23, 31, 101, 133};
@@ -416,7 +424,7 @@ public class GameGUI implements MouseMotionListener, MouseListener {
         templates4.add(e4);
         templates4.add(f4);
 
-        LinkedList<int[]> templates5 = new LinkedList<int[]>();
+        LinkedList<int[]> templates5 = new LinkedList<>();
         int[] a5 = {176, 168, 273, 268, 235, 228, 332, 298, 233, 187, 152, 93, 87, 67, 51};
         int[] b5 = {183, 188, 300, 278, 244, 229, 226, 330, 311, 265, 209, 179, 129, 104, 83};
         int[] c5 = {180, 261, 260, 249, 240, 334, 302, 215, 166, 148, 99, 82};
@@ -430,7 +438,7 @@ public class GameGUI implements MouseMotionListener, MouseListener {
         templates5.add(e5);
         templates5.add(f5);
 
-        LinkedList<int[]> templates6 = new LinkedList<int[]>();
+        LinkedList<int[]> templates6 = new LinkedList<>();
         int[] a6 = {211, 216, 215, 248, 255, 278, 327, 350, 29, 63, 100, 153, 185};
         int[] b6 = {211, 228, 237, 235, 247, 281, 289, 325, 347, 17, 62, 107, 149};
         int[] c6 = {204, 229, 227, 258, 280, 291, 332, 354, 18, 60, 93, 131, 190, 189};
@@ -444,7 +452,7 @@ public class GameGUI implements MouseMotionListener, MouseListener {
         templates6.add(e6);
         templates6.add(f6);
 
-        LinkedList<int[]> templates7 = new LinkedList<int[]>();
+        LinkedList<int[]> templates7 = new LinkedList<>();
         int[] a7 = {179, 177, 182, 182, 125, 53, 121, 151, 165, 162};
         int[] b7 = {177, 167, 77, 47, 88, 125, 129};
         int[] c7 = {183, 182, 118, 56, 92, 146, 154};
@@ -458,7 +466,7 @@ public class GameGUI implements MouseMotionListener, MouseListener {
         templates7.add(e7);
         templates7.add(f7);
 
-        LinkedList<int[]> templates8 = new LinkedList<int[]>();
+        LinkedList<int[]> templates8 = new LinkedList<>();
         int[] a8 = {196, 226, 243, 292, 276, 229, 174, 109, 73, 51, 9, 358, 329, 308, 314, 289};
         int[] b8 = {181, 255, 258, 300, 293, 210, 144, 107, 73, 52, 354, 336, 323, 327, 311, 349, 202};
         int[] c8 = {194, 226, 305, 225, 154, 87, 87, 64, 14, 350, 326, 251, 338};
@@ -472,7 +480,7 @@ public class GameGUI implements MouseMotionListener, MouseListener {
         templates8.add(e8);
         templates8.add(f8);
 
-        LinkedList<int[]> templates9 = new LinkedList<int[]>();
+        LinkedList<int[]> templates9 = new LinkedList<>();
         int[] a9 = {206, 258, 257, 256, 304, 311, 340, 353, 340, 45, 166, 177, 167, 121, 79, 63};
         int[] b9 = {221, 257, 259, 308, 324, 347, 329, 74, 157, 160, 100, 95, 65};
         int[] c9 = {240, 236, 299, 317, 318, 289, 85, 118, 162, 126, 83, 66, 42};
@@ -486,7 +494,7 @@ public class GameGUI implements MouseMotionListener, MouseListener {
         templates9.add(e9);
         templates9.add(f9);
 
-        LinkedList<int[]> templates10 = new LinkedList<int[]>();
+        LinkedList<int[]> templates10 = new LinkedList<>();
         int[] a10 = {207, 226, 230, 258, 274, 270, 320, 323, 324, 322, 280, 241};
         int[] b10 = {205, 247, 253, 286, 292, 279, 308, 318, 302, 309, 278, 242};
         int[] c10 = {210, 236, 239, 269, 268, 292, 304, 316, 324, 315, 298, 286, 293, 262};
@@ -512,7 +520,7 @@ public class GameGUI implements MouseMotionListener, MouseListener {
         allNumberTemplates.add(templates10);
 
         //The Templates for the letters a-j
-        LinkedList<int[]> templatesA = new LinkedList<int[]>();
+        LinkedList<int[]> templatesA = new LinkedList<>();
         int[] g = {217, 257, 245, 264, 308, 339, 347, 106, 151};
         int[] h = {190, 258, 253, 302, 317, 355, 26, 127, 335, 343, 202};
         int[] i = {199, 255, 269, 283, 299, 335, 302, 244, 56, 66, 158, 171};
@@ -526,7 +534,7 @@ public class GameGUI implements MouseMotionListener, MouseListener {
         templatesA.add(k);
         templatesA.add(l);
 
-        LinkedList<int[]> templatesB = new LinkedList<int[]>();
+        LinkedList<int[]> templatesB = new LinkedList<>();
         int[] g2 = {183, 183, 179, 351, 344, 272, 237, 165, 128, 90, 78, 90};
         int[] h2 = {185, 358, 353, 280, 146, 135, 98, 101, 64, 56, 60};
         int[] i2 = {180, 0, 357, 324, 262, 182, 150, 124, 91, 74, 67};
@@ -540,7 +548,7 @@ public class GameGUI implements MouseMotionListener, MouseListener {
         templatesB.add(k2);
         templatesB.add(l2);
 
-        LinkedList<int[]> templatesC = new LinkedList<int[]>();
+        LinkedList<int[]> templatesC = new LinkedList<>();
         int[] g3 = {209, 259, 236, 276, 257, 279};
         int[] h3 = {203, 232, 240, 244, 275, 269, 280, 279, 280};
         int[] i3 = {202, 251, 250, 256, 287, 295, 283, 274};
@@ -554,7 +562,7 @@ public class GameGUI implements MouseMotionListener, MouseListener {
         templatesC.add(k3);
         templatesC.add(l3);
 
-        LinkedList<int[]> templatesD = new LinkedList<int[]>();
+        LinkedList<int[]> templatesD = new LinkedList<>();
         int[] g4 = {223, 245, 261, 272, 268, 355, 237, 194, 358, 3, 175, 168};
         int[] h4 = {236, 256, 266, 303, 317, 283, 230, 7, 10, 41, 140};
         int[] i4 = {236, 252, 298, 308, 335, 336, 226, 212, 210, 353, 1, 178};
@@ -568,7 +576,7 @@ public class GameGUI implements MouseMotionListener, MouseListener {
         templatesD.add(k4);
         templatesD.add(l4);
 
-        LinkedList<int[]> templatesE = new LinkedList<int[]>();
+        LinkedList<int[]> templatesE = new LinkedList<>();
         int[] g5 = {267, 278, 256, 272, 284, 279, 303, 284, 265};
         int[] h5 = {226, 240, 226, 264, 263, 276, 301, 315, 302, 300, 275, 249};
         int[] i5 = {232, 226, 241, 277, 277, 255, 282, 281, 312, 296, 266, 255, 241};
@@ -582,7 +590,7 @@ public class GameGUI implements MouseMotionListener, MouseListener {
         templatesE.add(k5);
         templatesE.add(l5);
 
-        LinkedList<int[]> templatesF = new LinkedList<int[]>();
+        LinkedList<int[]> templatesF = new LinkedList<>();
         int[] g6 = {213, 240, 265, 306, 342, 359, 6, 55, 165};
         int[] h6 = {198, 231, 229, 290, 305, 4, 16, 90, 149, 156};
         int[] i6 = {211, 237, 232, 271, 287, 346, 5, 43, 165, 174};
@@ -596,7 +604,7 @@ public class GameGUI implements MouseMotionListener, MouseListener {
         templatesF.add(k6);
         templatesF.add(l6);
 
-        LinkedList<int[]> templatesG = new LinkedList<int[]>();
+        LinkedList<int[]> templatesG = new LinkedList<>();
         int[] g7 = {244, 260, 297, 307, 345, 323, 77, 161, 164, 131, 121, 82, 42, 343, 317};
         int[] h7 = {233, 258, 265, 304, 311, 297, 315, 65, 152, 135, 91, 83, 20};
         int[] i7 = {237, 257, 311, 325, 331, 71, 154, 157, 101, 57, 353, 310};
@@ -610,7 +618,7 @@ public class GameGUI implements MouseMotionListener, MouseListener {
         templatesG.add(k7);
         templatesG.add(l7);
 
-        LinkedList<int[]> templatesH = new LinkedList<int[]>();
+        LinkedList<int[]> templatesH = new LinkedList<>();
         int[] g8 = {182, 180, 0, 341, 281, 190, 151, 134, 144};
         int[] h8 = {183, 3, 349, 246, 152, 113, 122, 133};
         int[] i8 = {179, 176, 356, 355, 286, 233, 160, 134, 142};
@@ -624,7 +632,7 @@ public class GameGUI implements MouseMotionListener, MouseListener {
         templatesH.add(k8);
         templatesH.add(l8);
 
-        LinkedList<int[]> templatesI = new LinkedList<int[]>();
+        LinkedList<int[]> templatesI = new LinkedList<>();
         int[] g9 = {179, 178, 181, 181, 181, 181, 180, 180, 180};
         int[] h9 = {180, 180, 180, 180, 180, 180};
         int[] i9 = {178, 177, 180, 179, 182};
@@ -638,7 +646,7 @@ public class GameGUI implements MouseMotionListener, MouseListener {
         templatesI.add(k9);
         templatesI.add(l9);
 
-        LinkedList<int[]> templatesJ = new LinkedList<int[]>();
+        LinkedList<int[]> templatesJ = new LinkedList<>();
         int[] g10 = {208, 29, 39, 160, 146, 105, 81, 33, 1};
         int[] h10 = {219, 216, 28, 30, 130, 150, 119, 98, 57, 20};
         int[] i10 = {214, 229, 38, 65, 142, 91, 70, 28};
@@ -667,7 +675,7 @@ public class GameGUI implements MouseMotionListener, MouseListener {
     }
 
     //ZEitreihe soll mit templates verglichen werden
-    public Object compareTemplates() {
+    private Object compareTemplates() {
         int min = Integer.MAX_VALUE;
         Object index = -1;
 
@@ -703,7 +711,7 @@ public class GameGUI implements MouseMotionListener, MouseListener {
     }
 
     //Distanz der Zeitreihen soll hier berechnet werden. Rekursiv
-    public int dtw(LinkedList<Integer> angles, int[] template) {
+    private int dtw(LinkedList<Integer> angles, int[] template) {
 
         Integer series[] = new Integer[angles.size()];
         series = angles.toArray(series);
@@ -730,7 +738,7 @@ public class GameGUI implements MouseMotionListener, MouseListener {
         return costs[series.length - 1][template.length - 1];
     }
 
-    public int distance(int i, int j) {
+    private int distance(int i, int j) {
         int distance;
 //        if (Math.abs(i-j)<Math.PI){
 //            distance =  (int)(1/Math.PI)*Math.abs(i-j);
@@ -810,137 +818,6 @@ public class GameGUI implements MouseMotionListener, MouseListener {
 
     public void mouseExited(MouseEvent e) {
 
-    }
-
-    {
-// GUI initializer generated by IntelliJ IDEA GUI Designer
-// >>> IMPORTANT!! <<<
-// DO NOT EDIT OR ADD ANY CODE HERE!
-        $$$setupUI$$$();
-
-    }
-    /**
-     * Method generated by IntelliJ IDEA GUI Designer
-     * >>> IMPORTANT!! <<<
-     * DO NOT edit this method OR call it in your code!
-     *
-     * @noinspection ALL
-     */
-    private void $$$setupUI$$$() {
-        topLevelPanel = new JPanel();
-        topLevelPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        topLevelPanel.setMaximumSize(new Dimension(1920, 1080));
-        cards = new JPanel();
-        cards.setLayout(new CardLayout(0, 0));
-        topLevelPanel.add(cards, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        myTurn = new JPanel();
-        myTurn.setLayout(new GridLayoutManager(4, 2, new Insets(0, 0, 0, 0), -1, -1));
-        cards.add(myTurn, "Card1");
-        gridPanel = new JPanel();
-        gridPanel.setLayout(new GridLayoutManager(11, 11, new Insets(0, 0, 0, 0), 0, 0));
-        myTurn.add(gridPanel, new GridConstraints(0, 0, 4, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
-        final JLabel label1 = new JLabel();
-        label1.setText("2");
-        gridPanel.add(label1, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label2 = new JLabel();
-        label2.setText("3");
-        gridPanel.add(label2, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label3 = new JLabel();
-        label3.setText("4");
-        gridPanel.add(label3, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label4 = new JLabel();
-        label4.setText("5");
-        gridPanel.add(label4, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label5 = new JLabel();
-        label5.setText("6");
-        gridPanel.add(label5, new GridConstraints(6, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label6 = new JLabel();
-        label6.setText("7");
-        gridPanel.add(label6, new GridConstraints(7, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label7 = new JLabel();
-        label7.setText("8");
-        gridPanel.add(label7, new GridConstraints(8, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label8 = new JLabel();
-        label8.setText("9");
-        gridPanel.add(label8, new GridConstraints(9, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label9 = new JLabel();
-        label9.setText("10");
-        gridPanel.add(label9, new GridConstraints(10, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label10 = new JLabel();
-        label10.setText("A");
-        gridPanel.add(label10, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label11 = new JLabel();
-        label11.setText("B");
-        gridPanel.add(label11, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label12 = new JLabel();
-        label12.setText("C");
-        gridPanel.add(label12, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label13 = new JLabel();
-        label13.setText("D");
-        gridPanel.add(label13, new GridConstraints(0, 4, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label14 = new JLabel();
-        label14.setText("E");
-        gridPanel.add(label14, new GridConstraints(0, 5, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label15 = new JLabel();
-        label15.setText("F");
-        gridPanel.add(label15, new GridConstraints(0, 6, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label16 = new JLabel();
-        label16.setText("G");
-        gridPanel.add(label16, new GridConstraints(0, 7, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label17 = new JLabel();
-        label17.setText("H");
-        gridPanel.add(label17, new GridConstraints(0, 8, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label18 = new JLabel();
-        label18.setText("I");
-        gridPanel.add(label18, new GridConstraints(0, 9, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label19 = new JLabel();
-        label19.setText("J");
-        gridPanel.add(label19, new GridConstraints(0, 10, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label20 = new JLabel();
-        label20.setText("1");
-        gridPanel.add(label20, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final Spacer spacer1 = new Spacer();
-        myTurn.add(spacer1, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, 1, new Dimension(200, -1), null, null, 0, false));
-        restartButton = new JButton();
-        restartButton.setLabel("");
-        restartButton.setText("");
-        myTurn.add(restartButton, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, 1, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(100, -1), null, 0, false));
-        gestureTupelPane = new JTextPane();
-        Font gestureTupelPaneFont = this.$$$getFont$$$("Open Sans", Font.BOLD, 14, gestureTupelPane.getFont());
-        if (gestureTupelPaneFont != null) gestureTupelPane.setFont(gestureTupelPaneFont);
-        gestureTupelPane.setForeground(new Color(-12828863));
-        gestureTupelPane.setOpaque(false);
-        gestureTupelPane.setText("");
-        myTurn.add(gestureTupelPane, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_SOUTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
-        enemyTurn = new JPanel();
-        enemyTurn.setLayout(new GridBagLayout());
-        cards.add(enemyTurn, "Card2");
-    }
-
-    /**
-     * @noinspection ALL
-     */
-    private Font $$$getFont$$$(String fontName, int style, int size, Font currentFont) {
-        if (currentFont == null) return null;
-        String resultName;
-        if (fontName == null) {
-            resultName = currentFont.getName();
-        } else {
-            Font testFont = new Font(fontName, Font.PLAIN, 10);
-            if (testFont.canDisplay('a') && testFont.canDisplay('1')) {
-                resultName = fontName;
-            } else {
-                resultName = currentFont.getName();
-            }
-        }
-        return new Font(resultName, style >= 0 ? style : currentFont.getStyle(), size >= 0 ? size : currentFont.getSize());
-    }
-
-    /**
-     * @noinspection ALL
-     */
-    public JComponent $$$getRootComponent$$$() {
-        return topLevelPanel;
     }
 
 }
