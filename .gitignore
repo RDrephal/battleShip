@@ -2,6 +2,4 @@
 battleShip.iml
 out/
 
-target/classes/com/intellij/uiDesigner/core/VerticalInfo\.class
-
-target/classes/com/intellij/uiDesigner/core/
+target/
