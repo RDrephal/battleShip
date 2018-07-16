@@ -1,0 +1,34 @@
+Regeln
+
+Zwei Spieler
+Auslösung des Beginners zufällig.
+Es wird abwechselnd gespielt.
+Ein Schuss pro Runde.
+Ereignisse der Schüsse: 
+- Wasser
+- Treffer
+- Versenkt
+- Winner
+
+Gewinner ist der, der als erstes alle Schiffe versenkt.
+
+Schiffe Liegen auf einem 10x10 Spielfeld (A-J, 1-10)
+Die Schiffe dürfen nicht aneinander stoßen.
+Die Schiffe dürfen nicht über Eck gebaut sein oder Löcher besitzen.
+Die Schiffe dürfen nicht diagonal aufgestellt werden.
+
+Jeder verfügt über insgesamt zehn Schiffe (in Klammern die Größe):
+	("Aircraft Carrier", 5);
+       	("Battleship", 4);
+       	("Cruiser", 3);
+       	("Submarine", 3);
+       	("Patrol Boat", 2);
+       	("Corvette", 2);
+	("Rescue Ship",1)
+
+Schüsse: 
+- Treffer mit X markiert
+- Wasser mit O markiert
+- zerstörte Schiffe rot(Hintergrund)
+
+Quellen: Wiki https://de.wikipedia.org/wiki/Schiffe_versenken
