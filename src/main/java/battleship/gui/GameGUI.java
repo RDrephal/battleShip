@@ -523,17 +523,29 @@ public class GameGUI implements MouseMotionListener, MouseListener {
         //The Templates for the letters a-j
         LinkedList<int[]> templatesA = new LinkedList<>();
         int[] g = {217, 257, 245, 264, 308, 339, 347, 106, 151};
-        int[] h = {190, 258, 253, 302, 317, 355, 26, 127, 335, 343, 202};
+        int[] h = {213, 227, 262, 258, 282, 326, 355, 16, 173, 4, 10, 175, 182};
         int[] i = {199, 255, 269, 283, 299, 335, 302, 244, 56, 66, 158, 171};
         int[] j = {240, 264, 279, 305, 300, 342, 355, 192, 177, 357, 17, 159};
         int[] k = {205, 271, 280, 261, 300, 301, 332, 324, 258, 55, 112, 169};
         int[] l = {206, 257, 266, 298, 308, 332, 325, 271, 61, 88, 181};
+        int[] m = {189, 206, 225, 250, 268, 293, 316, 338, 352, 310, 357, 6, 174, 184};
+        int[] n = {185, 217, 244, 246, 272, 310, 335, 6, 38, 124, 154, 336, 342, 316, 211, 198, 189};
+        int[] o = {203, 210, 265, 296, 303, 338, 4, 67, 187, 354, 16, 34, 130};
+        int[] p = {192, 239, 264, 275, 308, 343, 10, 93, 162, 7, 40};
+        int[] q = {196, 218, 252, 262, 285, 316, 340, 6, 103, 187, 351, 1, 6, 182};
+
+
         templatesA.add(g);
         templatesA.add(h);
         templatesA.add(i);
         templatesA.add(j);
         templatesA.add(k);
         templatesA.add(l);
+        templatesA.add(m);
+        templatesA.add(n);
+        templatesA.add(o);
+        templatesA.add(p);
+        templatesA.add(q);
 
         LinkedList<int[]> templatesB = new LinkedList<>();
         int[] g2 = {183, 183, 179, 351, 344, 272, 237, 165, 128, 90, 78, 90};
@@ -570,12 +582,22 @@ public class GameGUI implements MouseMotionListener, MouseListener {
         int[] j4 = {242, 250, 276, 323, 328, 216, 237, 13, 16, 147, 169};
         int[] k4 = {227, 271, 288, 314, 346, 268, 213, 341, 12, 145};
         int[] l4 = {239, 257, 285, 332, 327, 214, 354, 10, 179};
+        int[] m4 = {185, 205, 239, 258, 270, 298, 329, 337, 320, 197, 186, 348, 1, 8, 30, 140, 157, 159};
+        int[] n4 = {186, 204, 241, 263, 279, 320, 353, 19, 148, 175, 348, 358, 0, 185, 193, 184};
+        int[] o4 = {195, 245, 254, 249, 282, 288, 312, 344, 346, 338, 197, 189, 180, 175, 355, 1, 3, 14, 172, 174};
+        int[] p4 = {192, 228, 249, 262, 262, 286, 324, 335, 245, 204, 190, 345, 1, 3, 25, 177, 191};
+
+
         templatesD.add(g4);
         templatesD.add(h4);
         templatesD.add(i4);
         templatesD.add(j4);
         templatesD.add(k4);
         templatesD.add(l4);
+        templatesD.add(m4);
+        templatesD.add(n4);
+        templatesD.add(o4);
+        templatesD.add(p4);
 
         LinkedList<int[]> templatesE = new LinkedList<>();
         int[] g5 = {267, 278, 256, 272, 284, 279, 303, 284, 265};
@@ -645,12 +667,18 @@ public class GameGUI implements MouseMotionListener, MouseListener {
         int[] j9 = {180, 176, 179, 181, 181, 181};
         int[] k9 = {180, 180, 180, 180, 180, 189, 188, 177, 178, 178};
         int[] l9 = {181, 171, 171, 177, 175};
+        int[] m9 = {182, 174, 179, 189, 188, 195};
+        int[] n9 = {193, 183, 177, 185};
+
+
         templatesI.add(g9);
         templatesI.add(h9);
         templatesI.add(i9);
         templatesI.add(j9);
         templatesI.add(k9);
         templatesI.add(l9);
+        templatesI.add(m9);
+        templatesI.add(n9);
 
         LinkedList<int[]> templatesJ = new LinkedList<>();
         int[] g10 = {208, 29, 39, 160, 146, 105, 81, 33, 1};
@@ -710,7 +738,7 @@ public class GameGUI implements MouseMotionListener, MouseListener {
         }
 
 
-        //System.out.println(angles);
+        System.out.println(angles);
         System.out.println("Minimum distance: " + min + "  |  Identified character: " + index);
 
         return index;
