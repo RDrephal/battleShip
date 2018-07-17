@@ -7,7 +7,6 @@ import battleship.model.Ship;
 import battleship.model.ShotEvent;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -15,7 +14,7 @@ public class Computer extends Player {
 
     private List<Coordinates> firing;
     private List<Coordinates> currentShip = new ArrayList<>();
-    private List<Coordinates> cardinaldirection= new ArrayList<>();
+    private List<Coordinates> cardinaldirection = new ArrayList<>();
     private Integer horizontal;
 
 
@@ -51,71 +50,103 @@ public class Computer extends Player {
             listFire.remove(shotIndex);
             setFiring(listFire);
             shotEvent = getShotEvent(enemy, shot);
-            if(shotEvent == ShotEvent.HIT){
+            if (shotEvent == ShotEvent.HIT) {
                 currentShip.add(shot);
                 Integer x = Helper.alphaToInt(shot.getX());
                 Integer y = shot.getY();
-                if(x > 1) {cardinaldirection.add(new Coordinates(Helper.toAlpha(x-1),y));}else cardinaldirection.add(null);
-                if (x < 10){ cardinaldirection.add(new Coordinates(Helper.toAlpha(x+1),y));}else cardinaldirection.add(null);
-                if (y > 1){ cardinaldirection.add(new Coordinates(Helper.toAlpha(x),y-1));}else cardinaldirection.add(null);
-                if (y < 10){ cardinaldirection.add(new Coordinates(Helper.toAlpha(x),y+1));}else cardinaldirection.add(null);
+                if (x > 1) {
+                    cardinaldirection.add(new Coordinates(Helper.toAlpha(x - 1), y));
+                } else cardinaldirection.add(null);
+                if (x < 10) {
+                    cardinaldirection.add(new Coordinates(Helper.toAlpha(x + 1), y));
+                } else cardinaldirection.add(null);
+                if (y > 1) {
+                    cardinaldirection.add(new Coordinates(Helper.toAlpha(x), y - 1));
+                } else cardinaldirection.add(null);
+                if (y < 10) {
+                    cardinaldirection.add(new Coordinates(Helper.toAlpha(x), y + 1));
+                } else cardinaldirection.add(null);
             }
-        }else {
+        } else {
             Integer shotIndex = null;
-            for(int i = 0; i <= 3;i++){
+            for (int i = 0; i <= 3; i++) {
                 Coordinates c = cardinaldirection.get(i);
-                if (c != null && -1 != indexOfValues(listFire,c)){
+                if (c != null && -1 != indexOfValues(listFire, c)) {
                     shotIndex = i;
                     break;
                 }
             }
 
-            if((cardinaldirection.get(0) != null || cardinaldirection.get(1) != null || cardinaldirection.get(2) != null ||cardinaldirection.get(3) != null) && shotIndex != null){
+            if ((cardinaldirection.get(0) != null || cardinaldirection.get(1) != null || cardinaldirection.get(2) != null || cardinaldirection.get(3) != null) && shotIndex != null) {
                 shotEvent = getShotEvent(enemy, cardinaldirection.get(shotIndex));
-                int place = indexOfValues(listFire,cardinaldirection.get(shotIndex));
-                if(place != -1){
+                int place = indexOfValues(listFire, cardinaldirection.get(shotIndex));
+                if (place != -1) {
                     listFire.remove(place);
                     setFiring(listFire);
                 }
-                if (shotEvent == ShotEvent.HIT){
+                if (shotEvent == ShotEvent.HIT) {
                     horizontal = shotIndex;
-                    if (0 != shotIndex)cardinaldirection.set(0, null);
-                    if (1 != shotIndex)cardinaldirection.set(1, null);
-                    if (2 != shotIndex)cardinaldirection.set(2, null);
-                    if (3 != shotIndex)cardinaldirection.set(3, null);
+                    if (0 != shotIndex) cardinaldirection.set(0, null);
+                    if (1 != shotIndex) cardinaldirection.set(1, null);
+                    if (2 != shotIndex) cardinaldirection.set(2, null);
+                    if (3 != shotIndex) cardinaldirection.set(3, null);
                     Coordinates currentShot = cardinaldirection.get(shotIndex);
-                    Integer x= Helper.alphaToInt(currentShot.getX());
+                    Integer x = Helper.alphaToInt(currentShot.getX());
                     Integer y = currentShot.getY();
 
                     switch (horizontal) {
-                        case 0: if(x > 1) {cardinaldirection.set(shotIndex,new Coordinates(Helper.toAlpha(x-1),y));}else cardinaldirection.set(0,null); break;
-                        case 1: if (x < 10){ cardinaldirection.set(shotIndex, new Coordinates(Helper.toAlpha(x+1),y));}else cardinaldirection.set(1,null); break;
-                        case 2: if (y > 1){ cardinaldirection.set(shotIndex, new Coordinates(Helper.toAlpha(x),y-1));}else cardinaldirection.set(2,null); break;
-                        case 3: if (y < 10){ cardinaldirection.set(shotIndex, new Coordinates(Helper.toAlpha(x),y+1));}else cardinaldirection.set(3,null); break;
+                        case 0:
+                            if (x > 1) {
+                                cardinaldirection.set(shotIndex, new Coordinates(Helper.toAlpha(x - 1), y));
+                            } else cardinaldirection.set(0, null);
+                            break;
+                        case 1:
+                            if (x < 10) {
+                                cardinaldirection.set(shotIndex, new Coordinates(Helper.toAlpha(x + 1), y));
+                            } else cardinaldirection.set(1, null);
+                            break;
+                        case 2:
+                            if (y > 1) {
+                                cardinaldirection.set(shotIndex, new Coordinates(Helper.toAlpha(x), y - 1));
+                            } else cardinaldirection.set(2, null);
+                            break;
+                        case 3:
+                            if (y < 10) {
+                                cardinaldirection.set(shotIndex, new Coordinates(Helper.toAlpha(x), y + 1));
+                            } else cardinaldirection.set(3, null);
+                            break;
                     }
-                }else{
+                } else {
                     cardinaldirection.set(shotIndex, null);
                 }
-            }else{
+            } else {
                 Coordinates currentShot = currentShip.get(0);
-                Integer x= Helper.alphaToInt(currentShot.getX());
+                Integer x = Helper.alphaToInt(currentShot.getX());
                 Integer y = currentShot.getY();
                 switch (horizontal) {
-                    case 0: if(x < 10) currentShip.add(0,new Coordinates(Helper.toAlpha(x+1),y));  break;
-                    case 1: if (x > 1) currentShip.add(0,new Coordinates(Helper.toAlpha(x-1),y)); break;
-                    case 2: if (y < 10) currentShip.add(0,new Coordinates(Helper.toAlpha(x),y+1)); break;
-                    case 3: if (y > 1) currentShip.add(0,new Coordinates(Helper.toAlpha(x),y-1));break;
+                    case 0:
+                        if (x < 10) currentShip.add(0, new Coordinates(Helper.toAlpha(x + 1), y));
+                        break;
+                    case 1:
+                        if (x > 1) currentShip.add(0, new Coordinates(Helper.toAlpha(x - 1), y));
+                        break;
+                    case 2:
+                        if (y < 10) currentShip.add(0, new Coordinates(Helper.toAlpha(x), y + 1));
+                        break;
+                    case 3:
+                        if (y > 1) currentShip.add(0, new Coordinates(Helper.toAlpha(x), y - 1));
+                        break;
                 }
                 shotEvent = getShotEvent(enemy, currentShip.get(0));
-                int place = indexOfValues(listFire,currentShip.get(0));
-                if(place != -1){
+                int place = indexOfValues(listFire, currentShip.get(0));
+                if (place != -1) {
                     listFire.remove(place);
                     setFiring(listFire);
                 }
             }
         }
 
-        if(shotEvent == ShotEvent.DESTROYED || shotEvent == ShotEvent.WINNER){
+        if (shotEvent == ShotEvent.DESTROYED || shotEvent == ShotEvent.WINNER) {
             deleteFiringFields(currentShip);
             currentShip.clear();
             cardinaldirection.clear();
@@ -126,37 +157,37 @@ public class Computer extends Player {
 
     private void deleteFiringFields(List<Coordinates> currentShip) {
         List<Coordinates> listFire = getFiring();
-        for (Coordinates c : currentShip){
+        for (Coordinates c : currentShip) {
             Integer x = Helper.alphaToInt(c.getX());
             Integer y = c.getY();
-           if(x < 10){
-               int place = indexOfValues( listFire, new Coordinates(Helper.toAlpha(x+1),y));
-               if(place != -1){
-                   listFire.remove(place);
-                   setFiring(listFire);
-               }
-           }
-           if (x > 1){
-               int place = indexOfValues(listFire,new Coordinates(Helper.toAlpha(x-1),y));
-               if(place != -1){
-                   listFire.remove(place);
-                   setFiring(listFire);
-               }
-           }
-           if (y < 10){
-               int place =  indexOfValues(listFire,new Coordinates(Helper.toAlpha(x),y+1));
-               if(place != -1){
-                   listFire.remove(place);
-                   setFiring(listFire);
-               }
-           }
-           if (y > 1){
-               int place =  indexOfValues(listFire,new Coordinates(Helper.toAlpha(x),y-1));
-               if(place != -1){
-                   listFire.remove(place);
-                   setFiring(listFire);
-               }
-           }
+            if (x < 10) {
+                int place = indexOfValues(listFire, new Coordinates(Helper.toAlpha(x + 1), y));
+                if (place != -1) {
+                    listFire.remove(place);
+                    setFiring(listFire);
+                }
+            }
+            if (x > 1) {
+                int place = indexOfValues(listFire, new Coordinates(Helper.toAlpha(x - 1), y));
+                if (place != -1) {
+                    listFire.remove(place);
+                    setFiring(listFire);
+                }
+            }
+            if (y < 10) {
+                int place = indexOfValues(listFire, new Coordinates(Helper.toAlpha(x), y + 1));
+                if (place != -1) {
+                    listFire.remove(place);
+                    setFiring(listFire);
+                }
+            }
+            if (y > 1) {
+                int place = indexOfValues(listFire, new Coordinates(Helper.toAlpha(x), y - 1));
+                if (place != -1) {
+                    listFire.remove(place);
+                    setFiring(listFire);
+                }
+            }
         }
     }
 
@@ -192,14 +223,14 @@ public class Computer extends Player {
         this.firing = firing;
     }
 
-    public Integer indexOfValues(List<Coordinates>searchableList, Coordinates values){
+    public Integer indexOfValues(List<Coordinates> searchableList, Coordinates values) {
         Integer i = -1;
-       for( Coordinates c: searchableList){
-           i++;
-          if (c.getX() == values.getX() && c.getY()== values.getY()) {
-              return i;
-          }
-       }
-       return i;
+        for (Coordinates c : searchableList) {
+            i++;
+            if (c.getX() == values.getX() && c.getY() == values.getY()) {
+                return i;
+            }
+        }
+        return i;
     }
 }

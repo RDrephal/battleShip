@@ -5,13 +5,11 @@ import battleship.gui.JButtonWithCoordinates;
 import battleship.gui.JButtonWithCoordinatesFactory;
 import battleship.helper.AlexaResponseHelper;
 import battleship.helper.Helper;
-import battleship.model.ShotEvent;
 
 import javax.swing.*;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import java.awt.*;
 
@@ -24,7 +22,7 @@ public class ShotResourceOnPosition {
     public ShotResourceOnPosition() {
     }
 
-    public Boolean place(){
+    public Boolean place() {
         Point mousePoint = Helper.getActiveGame().topLevelPanel.getMousePosition();
         GameGUI game = Helper.getActiveGame();
         game.topLevelPanel.getComponentAt(mousePoint);
@@ -40,7 +38,7 @@ public class ShotResourceOnPosition {
         Point mousePoint = Helper.getActiveGame().topLevelPanel.getMousePosition();
         GameGUI game = Helper.getActiveGame();
         Component component = game.getGridPanel().getComponentAt(mousePoint);
-        if(component != null) {
+        if (component != null) {
             System.out.println(mousePoint);
             System.out.println(component);
             JButtonWithCoordinates c = (JButtonWithCoordinates) ((JPanel) component).getComponent(0);
@@ -48,14 +46,14 @@ public class ShotResourceOnPosition {
             letter = c.getXValue();
             number = c.getYValue();
             JButtonWithCoordinates jb = JButtonWithCoordinatesFactory.getJButton(letter, number);
-            if(jb != null) {
+            if (jb != null) {
                 String[] response = AlexaResponseHelper.getShotResponse(jb, playerEvent);
                 playerEvent = response[0];
                 computerEvent = response[0];
             } else {
                 playerEvent = "NOTEXISTS";
             }
-        }else{
+        } else {
             playerEvent = "NOTEXISTS";
         }
 
