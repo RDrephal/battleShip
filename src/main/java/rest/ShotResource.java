@@ -27,7 +27,7 @@ public class ShotResource {
             String[] response = AlexaResponseHelper.getShotResponse(jb, playerEvent);
             playerEvent = response[0];
             computerEvent = response[0];
-        }else {
+        } else {
             playerEvent = "NOTEXISTS";
         }
 

@@ -19,11 +19,14 @@ public class CanonPosition {
     }
 
     @POST
-    public BooleanModel place(){
-        //Point mousePoint = Helper.getActiveGame().topLevelPanel.getMousePosition();
-        //GameGUI game = Helper.getActiveGame();
-       // game.topLevelPanel.getComponentAt(mousePoint);
+    public BooleanModel place() {
+        GameGUI game = Helper.getActiveGame();
 
-        return new BooleanModel(true);
+        Point mousePosition = game.topLevelPanel.getMousePosition();
+        if (mousePosition != null && game.myTurn.getComponentAt(mousePosition) == game.canon) {
+            return new BooleanModel(true);
+        } else {
+            return new BooleanModel(false);
+        }
     }
 }
